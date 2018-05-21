@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCategoriesTable extends Migration {
 	
+	const TABLE_NAME        = 'categories';
 	const DEFAULT_PARENT_ID = 0;
 	/**
 	 * Run the migrations.
@@ -13,11 +14,11 @@ class CreateCategoriesTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('categories', function (Blueprint $table) {
+		Schema::create(self::TABLE_NAME, function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
 			$table->string('alias');
-			$table->integer('parent_id')->default($this::DEFAULT_PARENT_ID);
+			$table->integer('parent_id')->default(self::DEFAULT_PARENT_ID);
 			$table->timestamps();
 		});
 	}
@@ -28,6 +29,6 @@ class CreateCategoriesTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('categories');
+		Schema::dropIfExists(self::TABLE_NAME);
 	}
 }

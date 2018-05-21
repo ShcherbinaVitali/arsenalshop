@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration {
+class CreateAdminsTable extends Migration {
 	
-	const TABLE_NAME = 'pages';
+	const TABLE_NAME   = 'admins';
+	const DEFAULT_ROLE = 1;
 	/**
 	 * Run the migrations.
 	 *
@@ -15,13 +16,11 @@ class CreatePagesTable extends Migration {
 	public function up() {
 		Schema::create(self::TABLE_NAME, function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('title');
-			$table->string('meta_title', 65)->nullable(true);
-			$table->string('meta_keywords')->nullable(true);
-			$table->string('meta_description', 160)->nullable(true);
-			$table->integer('order')->nullable(true);
-			$table->string('alias');
-			$table->longText('content');
+			$table->string('name');
+			$table->string('email')->unique();
+			$table->integer('role')->default(self::DEFAULT_ROLE);
+			$table->string('password');
+			$table->rememberToken();
 			$table->timestamps();
 		});
 	}

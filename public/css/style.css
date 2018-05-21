@@ -12,3 +12,9 @@
 .top-menu-wrap {
 	background: #f5f8fa;
 }
+.errors-danger strong {
+	color: #cb3b27;
+}
+.admin-wrap .panel-body {
+	line-height: 34px;
+}
