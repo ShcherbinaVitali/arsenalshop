@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductTable extends Migration {
+class CreateProductsTable extends Migration {
 	
 	const DEFAULT_CATEGORY_ID     = 0;
 	const DEFAULT_NEW_FLAG        = false;
@@ -15,7 +15,7 @@ class CreateProductTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('product', function (Blueprint $table) {
+		Schema::create('products', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title');
 			$table->string('meta_title', 65)->nullable(true);
@@ -36,6 +36,6 @@ class CreateProductTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('product');
+		Schema::dropIfExists('products');
 	}
 }
