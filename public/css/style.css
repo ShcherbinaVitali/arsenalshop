@@ -1,0 +1,14 @@
+.header-wrap,
+.footer-wrap {
+	color: #ffffff;
+	padding: 10px 0;
+}
+.header-wrap {
+	background: #636b6f;
+}
+.footer-wrap {
+	background: #464e52;
+}
+.top-menu-wrap {
+	background: #f5f8fa;
+}
