@@ -18,3 +18,22 @@
 .admin-wrap .panel-body {
 	line-height: 34px;
 }
+.top-menu {
+	list-style-type: none;
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+.top-menu-item {
+	display: inline;
+}
+.top-menu-item a {
+	display: inline-block;
+	text-decoration: none;
+	color: #295e66;
+	padding: 7px 20px;
+}
+.top-menu-item a:hover {
+	background-color: #295e66;
+	color: #ffffff;
+}
