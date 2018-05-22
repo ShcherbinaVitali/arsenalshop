@@ -25,19 +25,14 @@ class AppHelper {
 		return $activePages;
 	}
 	
+	/**
+	 * @return mixed
+	 */
 	public static function getCategoriesWithProducts() {
-		$activeCategories = Category::where([
+		$categoriesWithProducts = Category::where([
 			[self::IS_ACTIVE_TITLE, self::IS_ACTIVE_VALUE],
 			['parent_id', '=', 0]
 		])->get();
-		
-		/*$products       = Product::all();
-		$activeProducts = $products->whereStrict(
-			self::IS_ACTIVE_TITLE,
-			self::IS_ACTIVE_VALUE
-		);*/
-		
-		$categoriesWithProducts = $activeCategories;
 		
 		return $categoriesWithProducts;
 	}
