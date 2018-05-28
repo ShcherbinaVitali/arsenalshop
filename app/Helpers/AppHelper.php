@@ -6,6 +6,8 @@ use App\Category;
 use App\Page;
 use App\Product;
 
+use Illuminate\Support\Facades\Auth;
+
 class AppHelper {
 	
 	const IS_ACTIVE_TITLE = 'is_active';
@@ -53,5 +55,9 @@ class AppHelper {
 		);
 		
 		return $categories;
+	}
+	
+	public static function getCurrentAdmin() {
+		return Auth::user();
 	}
 }

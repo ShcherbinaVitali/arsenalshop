@@ -17,6 +17,11 @@
 </head>
 <body>
 <div class="page-container container">
+	<div>
+		<a href="{{ route('home') }}" target="_blank">
+			@lang('Открыть Сайт')
+		</a>
+	</div>
 	<div class="row">
 		@yield('content')
 	</div>
