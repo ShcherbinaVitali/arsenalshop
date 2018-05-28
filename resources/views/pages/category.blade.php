@@ -1,5 +1,10 @@
 @extends('layouts.page')
 
+@section('meta-tags')
+	<title>{{ $content->title }}</title>
+	<meta name="description" content="">
+@endsection
+
 @section('content')
 	<div class="content col-sm-8 col-md-8 col-lg-8">
 		<div>
