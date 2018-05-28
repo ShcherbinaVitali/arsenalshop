@@ -36,4 +36,22 @@ class AppHelper {
 		
 		return $categoriesWithProducts;
 	}
+	
+	public static function getProducts() {
+		$products = Product::all()->where(
+			self::IS_ACTIVE_TITLE,
+			self::IS_ACTIVE_VALUE
+		);
+		
+		return $products;
+	}
+	
+	public static function getCategories() {
+		$categories = Category::all()->where(
+			self::IS_ACTIVE_TITLE,
+			self::IS_ACTIVE_VALUE
+		);
+		
+		return $categories;
+	}
 }

@@ -9,7 +9,7 @@
 				<ul class="top-menu mx-auto">
 					@foreach($pages as $page)
 						<li class="top-menu-item">
-							<a href="/{{ $page->alias }}">
+							<a href="{{ route('static.page', $page->alias) }}">
 								{{ $page->title }}
 							</a>
 						</li>
