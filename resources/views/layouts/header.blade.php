@@ -13,7 +13,7 @@
 				@endif
 			</div>
 			<div class="header-contacts float-right">
-				contacts
+				@include('layouts.contacts')
 			</div>
 		</div>
 	</header>

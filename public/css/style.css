@@ -132,3 +132,7 @@ li.category-menu-item.item-active ul > li {
 .category-list .category > a {
 	border-bottom: 1px solid #636b6f;
 }
+
+.contact {
+	display: block;
+}
