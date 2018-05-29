@@ -1,9 +1,13 @@
 @extends('layouts.admin-page')
 
+@php
+	$admin = \App\Helpers\AppHelper::getCurrentAdmin();
+@endphp
+
 @section('content')
 	<div class="admin-wrap container">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<a href="{{ route('admin.dashboard') }}">Dashboard</a>
@@ -37,6 +41,23 @@
 								</li>
 							</ul>
 						</div>
+						
+						<div class="messages">
+							@if( session('message') )
+								<div class="alert alert-warning" role="alert">
+									@if(is_array(session('message')))
+										@foreach(session('message') as $message)
+											{{ $message }}
+										@endforeach
+									@else
+										{{ session('message') }}
+									@endif
+								</div>
+							@endif
+						</div>
+						@php
+							session()->forget('message');
+						@endphp
 					</div>
 				</div>
 			</div>

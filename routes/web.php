@@ -20,19 +20,21 @@ Route::prefix('admin')->group(function() {
 	Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
 	
 	Route::get('/static-pages', 'AdminController@staticPages')->name('admin.static-pages');
-	Route::get('/static-pages/{id}', 'AdminController@page')->name('admin.static-pages.page');
+	Route::get('/static-pages/{id}', 'AdminController@page')->where('id', '[0-9]+')->name('admin.static-pages.page');
 	Route::get('/static-pages/add', 'AdminController@addPage')->name('admin.static-pages.add');
-	Route::get('/static-pages/edit/{id?}', 'AdminController@editPage')->name('admin.static-pages.edit');
+	Route::get('/static-pages/edit/{id?}', 'AdminController@editPage')->where('id', '[0-9]+')->name('admin.static-pages.edit');
+	Route::post('/static-pages/save', 'AdminController@savePage')->name('admin.static-pages.save');
+	Route::get('/static-pages/delete/{id}', 'AdminController@deletePage')->where('id', '[0-9]+')->name('admin.static-pages.delete');
 	
 	Route::get('/categories', 'AdminController@categories')->name('admin.categories');
-	Route::get('/categories/{id}', 'AdminController@category')->name('admin.categories.category');
+	Route::get('/categories/{id}', 'AdminController@category')->where('id', '[0-9]+')->name('admin.categories.category');
 	Route::get('/categories/add', 'AdminController@addCategory')->name('admin.categories.add');
-	Route::get('/categories/edit/{id?}', 'AdminController@editCategory')->name('admin.categories.edit');
+	Route::get('/categories/edit/{id?}', 'AdminController@editCategory')->where('id', '[0-9]+')->name('admin.categories.edit');
 	
 	Route::get('/products', 'AdminController@products')->name('admin.products');
-	Route::get('/products/{id}', 'AdminController@product')->name('admin.products.product');
+	Route::get('/products/{id}', 'AdminController@product')->where('id', '[0-9]+')->name('admin.products.product');
 	Route::get('/products/add', 'AdminController@addProduct')->name('admin.products.add');
-	Route::get('/products/edit/{id?}', 'AdminController@editProduct')->name('admin.products.edit');
+	Route::get('/products/edit/{id?}', 'AdminController@editProduct')->where('id', '[0-9]+')->name('admin.products.edit');
 	
 	Route::get('/logout', 'AuthController@logout')->name('admin.logout');
 });

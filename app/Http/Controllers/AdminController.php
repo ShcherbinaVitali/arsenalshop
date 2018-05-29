@@ -30,13 +30,11 @@ class AdminController extends Controller {
 	}
 	
 	public function staticPages() {
-		$admin = AppHelper::getCurrentAdmin();
 		$pages = Page::all();
 		
 		return view(
 			'pages.panel.list',
 			[
-				'admin'      => $admin,
 				'title'      => 'Список Страниц',
 				'btn_title'  => 'Добавить страницу',
 				'btn_route'  => 'admin.static-pages.add',
@@ -46,14 +44,92 @@ class AdminController extends Controller {
 		);
 	}
 	
+	public function page($id) {
+		$page = Page::find($id);
+		
+		return view(
+			'pages.panel.static-pages.view',
+			[
+				'page' => $page
+			]
+		);
+	}
+	
+	public function addPage() {
+		return redirect()->route('admin.static-pages.edit');
+	}
+	
+	public function editPage($id = 0) {
+		if ($id != 0) {
+			$pageModel = Page::findOrFail($id);
+			
+			return view(
+				'pages.panel.static-pages.edit',
+				[
+					'page' => $pageModel
+				]
+			);
+		}
+		else {
+			return view(
+				'pages.panel.static-pages.edit'
+			);
+		}
+		
+	}
+	
+	public function savePage(Request $request) {
+		$data    = $request->all();
+		$message = 'Error saving the Page';
+		$id      = $data['id'];
+		unset($data['id']);
+		
+		if ( count($data) > 0 ) {
+			if ( $id ) {
+				$pageModel = Page::find($id);
+				
+				$pageModel->fill($data);
+				try {
+					$pageModel->save();
+					$message = "The Page ID: {$pageModel->id} successfully updated";
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+			else {
+				$pageModel = new Page;
+				$pageModel->fill($data);
+				
+				try {
+					$pageModel->save();
+					$message = 'The Page successfully created';
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+		}
+		
+		return redirect()->route('admin.static-pages')->with('message', $message);
+	}
+	
+	public function deletePage($id) {
+		$message = 'Error deleting the page';
+		if ($id) {
+			Page::destroy($id);
+			$message = 'The page is deleted successfully';
+		}
+		
+		return redirect()->route('admin.static-pages')->with('message', $message);
+	}
+	
 	public function categories() {
-		$admin      = AppHelper::getCurrentAdmin();
 		$categories = Category::all();
 		
 		return view(
 			'pages.panel.list',
 			[
-				'admin'      => $admin,
 				'title'      => 'Список Категорий',
 				'btn_title'  => 'Добавить категорию',
 				'btn_route'  => 'admin.categories.add',
@@ -64,13 +140,11 @@ class AdminController extends Controller {
 	}
 	
 	public function products() {
-		$admin    = AppHelper::getCurrentAdmin();
 		$products = Product::all();
 		
 		return view(
 			'pages.panel.list',
 			[
-				'admin'      => $admin,
 				'title'      => 'Список Продуктов',
 				'btn_title'  => 'Добавить продукт',
 				'btn_route'  => 'admin.products.add',
