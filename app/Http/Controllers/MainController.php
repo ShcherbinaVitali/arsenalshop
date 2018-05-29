@@ -20,6 +20,10 @@ class MainController extends Controller {
 		$page    = $request->page;
 		$content = Page::where('alias', '=', $page)->first();
 		
+		if (!$content) {
+			return redirect()->route('static.page-list')->with('message', 'Такой страницы не найдено');
+		}
+		
 		return view("pages.static-page", ['content' => $content]);
 	}
 	
