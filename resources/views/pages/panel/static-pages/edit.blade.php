@@ -1,7 +1,7 @@
 @extends('pages.panel.admin')
 
 @php
-	$backUrl   = Request::server('HTTP_REFERER');
+	$backUrl   = isset($page->id) ? route('admin.static-pages.page', $page->id) : route('admin.static-pages');
 	$pageTitle = isset($page->id) ? 'Редактирование Страницы' : 'Создание Страницы';
 @endphp
 

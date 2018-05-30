@@ -29,31 +29,31 @@
 									@lang('Основная информация')
 								</h3>
 								<div>
-									<span>ID:</span>
-									<strong>
+									<strong>ID:</strong>
+									<span>
 										{{ $page->id }}
-									</strong>
+									</span>
 								</div>
 								<div>
-									<span>
+									<strong>
 										@lang('Заголовок'):
-									</span>
-									<strong>
+									</strong>
+									<span>
 										{{ $page->title }}
-									</strong>
+									</span>
 								</div>
 								<div>
-									<span>
-										@lang('Ссылка'):
-									</span>
 									<strong>
-										{{ $page->alias }}
+										@lang('Ссылка'):
 									</strong>
+									<span>
+										{{ $page->alias }}
+									</span>
 								</div>
 								<div>
-									<span>
+									<strong>
 										@lang('Контент'):
-									</span>
+									</strong>
 									<div>
 										{!! $page->content !!}
 									</div>
@@ -75,40 +75,40 @@
 						<div class="meta-info">
 							<h3>@lang('Meta инфо')</h3>
 							<p>
-								<span>
+								<strong>
 									@lang('Meta title'):
-								</span>
-								<strong>
+								</strong>
+								<span>
 									{{ $page->meta_title }}
-								</strong>
+								</span>
 							</p>
 							<p>
-								<span>
+								<strong>
 									@lang('Meta Keywords'):
-								</span>
-								<strong>
-									{{ $page->meta_keywords }}
 								</strong>
+								<span>
+									{{ $page->meta_keywords }}
+								</span>
 							</p>
 							<p>
-								<span>
-									@lang('Meta Description'):
-								</span>
 								<strong>
-									{{ $page->meta_description }}
+									@lang('Meta Description'):
 								</strong>
+								<span>
+									{{ $page->meta_description }}
+								</span>
 							</p>
 						</div>
 						<hr>
 						<div class="meta-info">
 							<h3>@lang('Дополнительно')</h3>
 							<p>
-								<span>
-									@lang('Порядок'):
-								</span>
 								<strong>
-									{{ $page->order }}
+									@lang('Порядок'):
 								</strong>
+								<span>
+									{{ $page->order }}
+								</span>
 							</p>
 						</div>
 					</div>
