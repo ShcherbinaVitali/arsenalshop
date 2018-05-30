@@ -37,6 +37,8 @@ Route::prefix('admin')->group(function() {
 	Route::get('/products/{id}', 'AdminController@product')->where('id', '[0-9]+')->name('admin.products.product');
 	Route::get('/products/add', 'AdminController@addProduct')->name('admin.products.add');
 	Route::get('/products/edit/{id?}', 'AdminController@editProduct')->where('id', '[0-9]+')->name('admin.products.edit');
+	Route::post('/products/save', 'AdminController@saveProduct')->name('admin.products.save');
+	Route::get('/products/delete/{id}', 'AdminController@deleteProduct')->where('id', '[0-9]+')->name('admin.products.delete');
 	
 	Route::get('/logout', 'AuthController@logout')->name('admin.logout');
 });

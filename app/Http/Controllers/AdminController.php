@@ -96,7 +96,7 @@ class AdminController extends Controller {
 				$pageModel->fill($data);
 				try {
 					$pageModel->save();
-					$message = "The Page ID: {$pageModel->id} successfully updated";
+					$message = "The Page ID: {$pageModel->id} is updated successfully";
 				}
 				catch (\Exception $e) {
 					$message = $e->getMessage();
@@ -108,7 +108,7 @@ class AdminController extends Controller {
 				
 				try {
 					$pageModel->save();
-					$message = 'The Page successfully created';
+					$message = 'The Page is created successfully';
 				}
 				catch (\Exception $e) {
 					$message = $e->getMessage();
@@ -191,7 +191,6 @@ class AdminController extends Controller {
 				]
 			);
 		}
-		
 	}
 	
 	public function saveCategory(Request $request) {
@@ -210,7 +209,7 @@ class AdminController extends Controller {
 				$categoryModel->fill($data);
 				try {
 					$categoryModel->save();
-					$message = "The Category ID: {$categoryModel->id} successfully updated";
+					$message = "The Category ID: {$categoryModel->id} is updated successfully";
 				}
 				catch (\Exception $e) {
 					$message = $e->getMessage();
@@ -222,7 +221,7 @@ class AdminController extends Controller {
 				
 				try {
 					$categoryModel->save();
-					$message = 'The Category successfully created';
+					$message = 'The Category is created successfully';
 				}
 				catch (\Exception $e) {
 					$message = $e->getMessage();
@@ -249,12 +248,110 @@ class AdminController extends Controller {
 		return view(
 			'pages.panel.list',
 			[
-				'title'      => 'Список Продуктов',
-				'btn_title'  => 'Добавить продукт',
+				'title'      => 'Список Товаров',
+				'btn_title'  => 'Добавить товар',
 				'btn_route'  => 'admin.products.add',
 				'route_name' => 'admin.products.product',
 				'list'       => $products
 			]
 		);
+	}
+	
+	public function product($id) {
+		$product        = Product::findOrFail($id);
+		$parentCategory = 'Корневая категория';
+		
+		if ( $product->category_id != 0 ) {
+			$categoryId     = $product->category_id;
+			$categoryModel  = Category::findOrFail($categoryId);
+			$parentCategory = $categoryModel->title;
+		}
+		
+		return view(
+			'pages.panel.products.view',
+			[
+				'product'         => $product,
+				'parent_category' => $parentCategory
+			]
+		);
+	}
+	
+	public function addProduct() {
+		$request = Request::create(route('admin.products.edit'), 'GET');
+		
+		return Route::dispatch($request);
+	}
+	
+	public function editProduct($id = 0) {
+		$categoryList  = AppHelper::getCategories();
+		
+		if ($id != 0) {
+			$productModel = Product::findOrFail($id);
+			
+			return view(
+				'pages.panel.products.edit',
+				[
+					'category_list' => $categoryList,
+					'product'       => $productModel
+				]
+			);
+		}
+		else {
+			return view(
+				'pages.panel.products.edit',
+				[
+					'category_list' => $categoryList
+				]
+			);
+		}
+	}
+	
+	public function saveProduct(Request $request) {
+		$data    = $request->all();
+		$message = 'Error saving the Product';
+		$id      = '';
+		if (isset($data['id'])) {
+			$id = $data['id'];
+			unset($data['id']);
+		}
+		
+		if ( count($data) > 0 ) {
+			if ( $id ) {
+				$productModel = Product::findOrFail($id);
+				
+				$productModel->fill($data);
+				try {
+					$productModel->save();
+					$message = "The Product ID: {$productModel->id} is updated successfully";
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+			else {
+				$productModel = new Product;
+				$productModel->fill($data);
+				
+				try {
+					$productModel->save();
+					$message = 'The Product is created successfully';
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+		}
+		
+		return redirect()->route('admin.products')->with('message', $message);
+	}
+	
+	public function deleteProduct($id) {
+		$message = 'Error deleting the Product';
+		if ($id) {
+			Product::destroy($id);
+			$message = 'The Product is deleted successfully';
+		}
+		
+		return redirect()->route('admin.products')->with('message', $message);
 	}
 }
