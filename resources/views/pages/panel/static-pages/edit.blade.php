@@ -52,7 +52,7 @@
 										<p>
 											<input type="text" name="alias" value="{{ $page->alias }}" required class="form-control">
 											<span class="note">
-												@lang('Должна быть уникальной')
+												@lang('Должна быть уникальной, писать латиницей')
 											</span>
 										</p>
 									</div>
@@ -173,7 +173,7 @@
 										<p>
 											<input type="text" name="alias" value="" required class="form-control">
 											<span class="note">
-												@lang('Должна быть уникальной')
+												@lang('Должна быть уникальной, писать латиницей')
 											</span>
 										</p>
 									</div>

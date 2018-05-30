@@ -30,6 +30,8 @@ Route::prefix('admin')->group(function() {
 	Route::get('/categories/{id}', 'AdminController@category')->where('id', '[0-9]+')->name('admin.categories.category');
 	Route::get('/categories/add', 'AdminController@addCategory')->name('admin.categories.add');
 	Route::get('/categories/edit/{id?}', 'AdminController@editCategory')->where('id', '[0-9]+')->name('admin.categories.edit');
+	Route::post('/categories/save', 'AdminController@saveCategory')->name('admin.categories.save');
+	Route::get('/categories/delete/{id}', 'AdminController@deleteCategory')->where('id', '[0-9]+')->name('admin.categories.delete');
 	
 	Route::get('/products', 'AdminController@products')->name('admin.products');
 	Route::get('/products/{id}', 'AdminController@product')->where('id', '[0-9]+')->name('admin.products.product');

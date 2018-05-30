@@ -8,6 +8,7 @@ use App\Helpers\AppHelper;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller {
 	/**
@@ -45,7 +46,7 @@ class AdminController extends Controller {
 	}
 	
 	public function page($id) {
-		$page = Page::find($id);
+		$page = Page::findOrFail($id);
 		
 		return view(
 			'pages.panel.static-pages.view',
@@ -56,7 +57,9 @@ class AdminController extends Controller {
 	}
 	
 	public function addPage() {
-		return redirect()->route('admin.static-pages.edit');
+		$request = Request::create(route('admin.static-pages.edit'), 'GET');
+		
+		return Route::dispatch($request);
 	}
 	
 	public function editPage($id = 0) {
@@ -75,14 +78,16 @@ class AdminController extends Controller {
 				'pages.panel.static-pages.edit'
 			);
 		}
-		
 	}
 	
 	public function savePage(Request $request) {
 		$data    = $request->all();
 		$message = 'Error saving the Page';
-		$id      = $data['id'];
-		unset($data['id']);
+		$id      = '';
+		if (isset($data['id'])) {
+			$id = $data['id'];
+			unset($data['id']);
+		}
 		
 		if ( count($data) > 0 ) {
 			if ( $id ) {
@@ -137,6 +142,105 @@ class AdminController extends Controller {
 				'list'       => $categories
 			]
 		);
+	}
+	
+	public function category($id) {
+		$category       = Category::findOrFail($id);
+		$parentCategory = 'Корневая категория';
+		
+		if ( $category->parent_id != 0 ) {
+			$parentId       = $category->parent_id;
+			$parentModel    = Category::findOrFail($parentId);
+			$parentCategory = $parentModel->title;
+		}
+		
+		return view(
+			'pages.panel.categories.view',
+			[
+				'category'        => $category,
+				'parent_category' => $parentCategory
+			]
+		);
+	}
+	
+	public function addCategory() {
+		$request = Request::create(route('admin.categories.edit'), 'GET');
+		
+		return Route::dispatch($request);
+	}
+	
+	public function editCategory($id = 0) {
+		$categoryList  = Category::all()->where('id', '!=', $id);
+		
+		if ($id != 0) {
+			$categoryModel = Category::findOrFail($id);
+			
+			return view(
+				'pages.panel.categories.edit',
+				[
+					'category_list' => $categoryList,
+					'category'      => $categoryModel
+				]
+			);
+		}
+		else {
+			return view(
+				'pages.panel.categories.edit',
+				[
+					'category_list' => $categoryList
+				]
+			);
+		}
+		
+	}
+	
+	public function saveCategory(Request $request) {
+		$data    = $request->all();
+		$message = 'Error saving the Category';
+		$id      = '';
+		if (isset($data['id'])) {
+			$id = $data['id'];
+			unset($data['id']);
+		}
+		
+		if ( count($data) > 0 ) {
+			if ( $id ) {
+				$categoryModel = Category::find($id);
+				
+				$categoryModel->fill($data);
+				try {
+					$categoryModel->save();
+					$message = "The Category ID: {$categoryModel->id} successfully updated";
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+			else {
+				$categoryModel = new Category;
+				$categoryModel->fill($data);
+				
+				try {
+					$categoryModel->save();
+					$message = 'The Category successfully created';
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+		}
+		
+		return redirect()->route('admin.categories')->with('message', $message);
+	}
+	
+	public function deleteCategory($id) {
+		$message = 'Error deleting the Category';
+		if ($id) {
+			Category::destroy($id);
+			$message = 'The Category is deleted successfully';
+		}
+		
+		return redirect()->route('admin.categories')->with('message', $message);
 	}
 	
 	public function products() {

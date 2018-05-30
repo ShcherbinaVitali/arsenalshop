@@ -1,7 +1,7 @@
 @extends('pages.panel.admin')
 
 @php
-	$backUrl = Request::server('HTTP_REFERER');
+	$backUrl = route('admin.static-pages');
 @endphp
 
 @section('content')
@@ -100,7 +100,7 @@
 							</p>
 						</div>
 						<hr>
-						<div class="meta-info">
+						<div class="additional-info">
 							<h3>@lang('Дополнительно')</h3>
 							<p>
 								<strong>
