@@ -91,7 +91,7 @@ class AdminController extends Controller {
 		
 		if ( count($data) > 0 ) {
 			if ( $id ) {
-				$pageModel = Page::find($id);
+				$pageModel = Page::findOrFail($id);
 				
 				$pageModel->fill($data);
 				try {
@@ -205,7 +205,7 @@ class AdminController extends Controller {
 		
 		if ( count($data) > 0 ) {
 			if ( $id ) {
-				$categoryModel = Category::find($id);
+				$categoryModel = Category::findOrFail($id);
 				
 				$categoryModel->fill($data);
 				try {
