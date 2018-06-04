@@ -37,6 +37,12 @@ class CategoryController extends Controller {
 		
 		$categoryModel = Category::where('alias', '=', $category)->first();
 		
+		if (!$categoryModel) {
+			return redirect()
+				->route('catalog.category-list')
+				->with('p_message', 'Такого продукта или категории не существует!');
+		}
+		
 		return view(
 			'pages.category', ['content' => $categoryModel]
 		);

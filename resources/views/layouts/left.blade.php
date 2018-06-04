@@ -5,7 +5,9 @@
 @if( count($catWithProducts) > 0 )
 	<div class="left-wrap col-sm-4 col-md-4 col-lg-4">
 		<div class="left-menu">
-			left menu
+			<div class="catalog-menu-title">
+				<span>@lang('Каталог')</span>
+			</div>
 			<div class="menu">
 				<ul>
 					@foreach($catWithProducts as $item)

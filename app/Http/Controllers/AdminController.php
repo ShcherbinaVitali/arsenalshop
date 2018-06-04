@@ -6,9 +6,13 @@ use App\Category;
 use App\Page;
 use App\Helpers\AppHelper;
 use App\Product;
+use App\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller {
 	/**
@@ -310,10 +314,13 @@ class AdminController extends Controller {
 		$data    = $request->all();
 		$message = 'Error saving the Product';
 		$id      = '';
-		if (isset($data['id'])) {
+		if ( isset($data['id']) ) {
 			$id = $data['id'];
 			unset($data['id']);
 		}
+		
+		$productImages = $request->file('product_image');
+		unset($data['product_image']);
 		
 		if ( count($data) > 0 ) {
 			if ( $id ) {
@@ -339,17 +346,101 @@ class AdminController extends Controller {
 				catch (\Exception $e) {
 					$message = $e->getMessage();
 				}
+				$id = $productModel->id;
+			}
+			
+			if ( count($productImages) > 0 ) {
+				$done = $this->saveProductImage($id, $productImages);
+				
+				if (!$done) {
+					$message = 'Error saving image(s)';
+				}
 			}
 		}
 		
 		return redirect()->route('admin.products')->with('message', $message);
 	}
 	
+	public function saveProductImage($id, array $productImages) {
+		$imgName  = Carbon::now()->timestamp;
+		
+		for ($i = 0; $i < count($productImages); $i++) {
+			$mimeType    = $productImages[$i]->getClientOriginalExtension();
+			$fullImgName = $imgName . '_' . $i . '.' . $mimeType;
+			
+			$productImages[$i]
+				->storeAs(
+					'public/images/products/' . $id,
+					$fullImgName
+				);
+			$imageModel = new ProductImage;
+			$imageModel->product_id = $id;
+			$imageModel->name       = $fullImgName;
+			
+			try {
+				$imageModel->save();
+			}
+			catch (\Exception $e) {
+				Log::error($e->getMessage());
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public function deleteProductImages($product_id) {
+		$productImages = ProductImage::all()
+			->where('product_id', '=', $product_id);
+		if ( count($productImages) > 0 ) {
+			foreach ($productImages as $productImage) {
+				try {
+					Storage::delete('public/images/products/' . $product_id . '/' . $productImage->name);
+					$productImage->delete();
+				}
+				catch (\Exception $e) {
+					Log::error($e->getMessage());
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	
+	public function deleteProductImage(Request $request) {
+		$success = false;
+		$message = 'Error deleting image';
+		$data    = $request->all();
+		$id      = (int) $data['id'];
+		$name    = $data['name'];
+		
+		$productImage = ProductImage::where([
+			['name', '=', $name],
+			['product_id', '=', $id]
+		])->get()->first();
+		
+		if ($productImage) {
+			Storage::delete('public/images/products/' . $productImage->product_id . '/' . $productImage->name);
+			$productImage->delete();
+			$success = true;
+			$message = 'The image is deleted successfully';
+		}
+		
+		return response()->json([
+			'success' => $success,
+			'message' => $message
+		]);
+	}
+	
 	public function deleteProduct($id) {
-		$message = 'Error deleting the Product';
+		$message = 'Error deleting the Product or related image(s)';
 		if ($id) {
-			Product::destroy($id);
-			$message = 'The Product is deleted successfully';
+			$done = $this->deleteProductImages($id);
+			
+			if ($done) {
+				Product::destroy($id);
+				$message = 'The Product is deleted successfully';
+			}
 		}
 		
 		return redirect()->route('admin.products')->with('message', $message);

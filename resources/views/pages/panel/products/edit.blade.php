@@ -86,6 +86,28 @@
 											>
 										</p>
 									</div>
+									<div class="form-group image-container">
+										<strong>
+											@lang('Изображения товара'):
+										</strong>
+										<i class="fas fa-plus-circle" id="add-input"></i>
+										<div class="img-preview container">
+											@if( $product->images && count($product->images) > 0 )
+												<div class="row">
+													@foreach($product->images as $image)
+														<div class="img-item col-md-2">
+															<div class="loading"></div>
+															<img src="{{ asset("storage/images/products/{$image->product_id}/{$image->name}") }}" alt="">
+															<i class="far fa-times-circle remove-product-image"></i>
+														</div>
+													@endforeach
+												</div>
+											@endif
+										</div>
+										<p class="form-control">
+											<input type="file" name="product_image[]" class="add-image" multiple>
+										</p>
+									</div>
 								</div>
 							</div>
 							<div class="meta-info">
@@ -256,10 +278,27 @@
 									</div>
 									<div class="form-group">
 										<strong>
+											@lang('Описание товара'):
+										</strong>
+										<p>
+											<textarea name="description" id="" cols="30" rows="4" class="form-control" required></textarea>
+										</p>
+									</div>
+									<div class="form-group">
+										<strong>
 											@lang('Товар активирован'):
 										</strong>
 										<p>
 											<input type="checkbox" name="is_active" value="1" class="form-check">
+										</p>
+									</div>
+									<div class="form-group image-container">
+										<strong>
+											@lang('Изображения товара'):
+										</strong>
+										<i class="fas fa-plus-circle" id="add-input"></i>
+										<p class="form-control">
+											<input type="file" name="product_image[]" class="add-image" multiple>
 										</p>
 									</div>
 								</div>
@@ -354,5 +393,69 @@
 				</div>
 			</div>
 		@endif
+		<script>
+			var parseImgSrc = function (src) {
+				var arr  = src.split('/');
+				var id   = arr[arr.length - 2];
+				var name = arr[arr.length - 1];
+				
+				return {
+					id: id,
+					name: name
+				}
+			};
+			
+			$('.remove-product-image').click(function () {
+				var loader = $(this).prev().prev();
+				loader.show();
+				
+				var imgBlock = $(this).parent();
+				$(this).prev().css('opacity', 0.6);
+				var src      = $(this).prev().attr('src');
+				var data     = parseImgSrc(src);
+				$(this).hide();
+				
+				$.ajax({
+					type: 'POST',
+					url: "{{ url("admin/image/delete") }}",
+					headers: {
+						'X-CSRF-Token': "{{ csrf_token() }}"
+					},
+					data: data,
+					success: function(data) {
+						if (data.success) {
+							imgBlock.fadeOut(300, function() {
+								$(this).remove();
+							});
+						}
+					},
+					complete: function(){
+						loader.hide();
+					}
+				});
+			});
+			
+			$('#add-input').click(function () {
+				var block = addFileBlock();
+				$('.image-container').append(block);
+			});
+			
+			var removeFileBlock = function () {
+				var parent = $(this).parent();
+				parent.remove();
+			};
+			
+			var addFileBlock = function() {
+				var parent = $('<p class="form-control" />');
+				var input  = $('<input type="file" name="product_image[]" class="add-image" multiple />');
+				var icon   = $('<i class="far fa-times-circle float-right remove-input-block"></i>');
+				icon.bind('click', removeFileBlock);
+				
+				parent.append(input).append(icon);
+				
+				return parent;
+			};
+			
+		</script>
 	</div>
 @endsection

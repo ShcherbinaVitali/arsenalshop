@@ -4,7 +4,7 @@
 			<li>
 				<i class="fa fa-home"></i>
 				<a href="{{ route('home') }}">@lang('Главная')</a>
-				<i class="fa fa-angle-right"></i>
+				<span>/</span>
 			</li>
 			@php
 				$segments = Request::segments();
@@ -17,7 +17,7 @@
 					@endphp
 					@if($i != count($segments) - 1)
 						<a href="/{{ $path }}">{{ $segments[$i] }}</a>
-						<i class="fa fa-angle-right"></i>
+						<span>/</span>
 					@else
 						<span>{{ $segments[$i] }}</span>
 					@endif

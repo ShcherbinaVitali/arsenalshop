@@ -40,5 +40,7 @@ Route::prefix('admin')->group(function() {
 	Route::post('/products/save', 'AdminController@saveProduct')->name('admin.products.save');
 	Route::get('/products/delete/{id}', 'AdminController@deleteProduct')->where('id', '[0-9]+')->name('admin.products.delete');
 	
+	Route::post('/image/delete', 'AdminController@deleteProductImage');
+	
 	Route::get('/logout', 'AuthController@logout')->name('admin.logout');
 });

@@ -2,6 +2,7 @@
 
 @section('content')
 	<div class="content col-sm-8 col-md-8 col-lg-8">
+		<hr>
 		<div class="container">
 			<div class="row">
 				@if(count($pages) > 0)

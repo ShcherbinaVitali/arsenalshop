@@ -9,6 +9,7 @@
 @section('content')
 	<div class="content col-sm-8 col-md-8 col-lg-8">
 		<div class="container">
+			<hr>
 			<div class="row">
 				<div>
 					@if($content)

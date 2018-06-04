@@ -17,13 +17,20 @@ class Product extends Model {
 		'bestseller',
 		'alias',
 		'is_active',
-		'discount'
+		'discount',
+		'description'
 	];
 	
 	/**
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
 	public function category() {
-		return $this->belongsTo(Category::class, 'category_id');
+		return $this
+			->belongsTo(Category::class, 'category_id');
+	}
+	
+	public function images() {
+		return $this
+			->hasMany(ProductImage::class, 'product_id', 'id');
 	}
 }

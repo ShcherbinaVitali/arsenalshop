@@ -21,7 +21,7 @@ class Category extends Model {
 	public function subcategories() {
 		return $this
 			->hasMany(Category::class, 'parent_id', 'id')
-			->where('categories.is_active', '=', 1);
+			->where('categories.is_active', '=', 1)
 		;
 	}
 	
