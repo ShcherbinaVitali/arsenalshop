@@ -58,6 +58,15 @@
 										{{ $parent_category }}
 									</span>
 								</div>
+								
+								<div>
+									<strong>
+										@lang('Описание товара'):
+									</strong>
+									<div>
+										{!! html_entity_decode($product->description) !!}
+									</div>
+								</div>
 								<div>
 									@if( $product->is_active )
 										<strong>

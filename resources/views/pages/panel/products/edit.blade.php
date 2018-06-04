@@ -76,6 +76,16 @@
 									</div>
 									<div class="form-group">
 										<strong>
+											@lang('Описание товара'):
+										</strong>
+										<p>
+											<textarea name="description" id="content" class="form-control">
+												{!! html_entity_decode($product->description) !!}
+											</textarea>
+										</p>
+									</div>
+									<div class="form-group">
+										<strong>
 											@lang('Товар активирован'):
 										</strong>
 										<p>
@@ -281,7 +291,7 @@
 											@lang('Описание товара'):
 										</strong>
 										<p>
-											<textarea name="description" id="" cols="30" rows="4" class="form-control" required></textarea>
+											<textarea name="description" id="content" class="form-control"></textarea>
 										</p>
 									</div>
 									<div class="form-group">

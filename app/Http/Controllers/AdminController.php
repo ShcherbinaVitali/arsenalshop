@@ -88,12 +88,14 @@ class AdminController extends Controller {
 		$data    = $request->all();
 		$message = 'Error saving the Page';
 		$id      = '';
+		$data['content'] = e($data['content']);
+		
 		if (isset($data['id'])) {
 			$id = $data['id'];
 			unset($data['id']);
 		}
 		
-		if ( count($data) > 0 ) {
+		if ( $data && count($data) > 0 ) {
 			if ( $id ) {
 				$pageModel = Page::findOrFail($id);
 				
@@ -206,7 +208,7 @@ class AdminController extends Controller {
 			unset($data['id']);
 		}
 		
-		if ( count($data) > 0 ) {
+		if ( $data && count($data) > 0 ) {
 			if ( $id ) {
 				$categoryModel = Category::findOrFail($id);
 				
@@ -322,7 +324,7 @@ class AdminController extends Controller {
 		$productImages = $request->file('product_image');
 		unset($data['product_image']);
 		
-		if ( count($data) > 0 ) {
+		if ( $data && count($data) > 0 ) {
 			if ( $id ) {
 				$productModel = Product::findOrFail($id);
 				
@@ -349,8 +351,8 @@ class AdminController extends Controller {
 				$id = $productModel->id;
 			}
 			
-			if ( count($productImages) > 0 ) {
-				$done = $this->saveProductImage($id, $productImages);
+			if ( $productImages && count($productImages) > 0 ) {
+				$done = $this->saveProductImages($id, $productImages);
 				
 				if (!$done) {
 					$message = 'Error saving image(s)';
@@ -361,7 +363,7 @@ class AdminController extends Controller {
 		return redirect()->route('admin.products')->with('message', $message);
 	}
 	
-	public function saveProductImage($id, array $productImages) {
+	public function saveProductImages($id, array $productImages) {
 		$imgName  = Carbon::now()->timestamp;
 		
 		for ($i = 0; $i < count($productImages); $i++) {

@@ -61,7 +61,9 @@
 											@lang('Контент страницы'):
 										</span>
 										<p>
-										<textarea name="content" id="" cols="30" rows="4" class="form-control" required>{!! $page->content !!}</textarea>
+											<textarea name="content" id="content" class="form-control">
+												{!! html_entity_decode($page->content) !!}
+											</textarea>
 										</p>
 									</div>
 									<div class="form-group">
@@ -138,7 +140,7 @@
 			<div class="row">
 				<div class="col-md">
 					<h2>{{ $pageTitle }}</h2>
-					<form action="{{ route('admin.static-pages.save') }}" method="post" enctype="multipart/form-data">
+					<form action="{{ route('admin.static-pages.save') }}" method="post" enctype="multipart/form-data"><!--novalidate-->
 						@csrf
 						
 						<div class="button-group text-left">
@@ -182,7 +184,7 @@
 											@lang('Контент страницы'):
 										</span>
 										<p>
-											<textarea name="content" id="" cols="30" rows="4" class="form-control" required></textarea>
+											<textarea name="content" id="content" class="form-control"></textarea>
 										</p>
 									</div>
 									<div class="form-group">

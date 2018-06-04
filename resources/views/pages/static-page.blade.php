@@ -13,7 +13,7 @@
 			<div class="row">
 				<div>
 					@if($content)
-						{{ $content->content }}
+						{!! html_entity_decode($content->content) !!}
 					@endif
 				</div>
 			</div>

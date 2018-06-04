@@ -87,6 +87,18 @@
 							</strong>
 							<span class="@if ($content->discount) discounted-currency @endif">@lang('BYN')</span>
 						</div>
+						<div class="product-count">
+							@if( $content->count && $content->count > 0 )
+								<strong>
+									@lang('Количество'):
+								</strong>
+								<span>
+									{{ $content->count }}
+								</span>
+							@else
+								<span>@lang('Под заказ')</span>
+							@endif
+						</div>
 						<div class="product-btn">
 							<button href="#" class="btn btn-primary" data-toggle="modal" data-target="#productOrderModal">
 								@lang('Заказать')
@@ -98,8 +110,9 @@
 					<h3>
 						@lang('Описание')
 					</h3>
+					<hr>
 					<p>
-						{{ $content->description }}
+						{!! html_entity_decode($content->description) !!}
 					</p>
 				</div>
 			</div>

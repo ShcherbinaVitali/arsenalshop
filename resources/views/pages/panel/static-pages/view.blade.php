@@ -55,7 +55,7 @@
 										@lang('Контент'):
 									</strong>
 									<div>
-										{!! $page->content !!}
+										{!! html_entity_decode($page->content) !!}
 									</div>
 								</div>
 								<div>
