@@ -54,7 +54,6 @@
 															{{ $product->title }}
 														</strong>
 													</div>
-													<hr>
 													@if( $product->new || $product->bestseller || $product->discount )
 														<div class="additional-info container">
 															<div class="row text-center">

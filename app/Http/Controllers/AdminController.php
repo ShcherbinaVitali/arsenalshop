@@ -316,6 +316,8 @@ class AdminController extends Controller {
 		$data    = $request->all();
 		$message = 'Error saving the Product';
 		$id      = '';
+		$data['description'] = e($data['description']);
+		
 		if ( isset($data['id']) ) {
 			$id = $data['id'];
 			unset($data['id']);

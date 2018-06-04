@@ -76,17 +76,19 @@
 								</div>
 							</div>
 						@endif
-						<div class="product-price">
-							<strong>
-								@if( $content->discount )
-									<s class="old-price">{{ $content->price }} @lang('BYN')</s>
-									<span class="discounted-price">{{ $content->price - ( $content->price / 100 * $content->discount ) }}</span>
-								@else
-									<span>{{ $content->price }}</span>
-								@endif
-							</strong>
-							<span class="@if ($content->discount) discounted-currency @endif">@lang('BYN')</span>
-						</div>
+						@if( $content->price )
+							<div class="product-price">
+								<strong>
+									@if( $content->discount )
+										<s class="old-price">{{ $content->price }} @lang('BYN')</s>
+										<span class="discounted-price">{{ $content->price - ( $content->price / 100 * $content->discount ) }}</span>
+									@else
+										<span>{{ $content->price }}</span>
+									@endif
+								</strong>
+								<span class="@if ($content->discount) discounted-currency @endif">@lang('BYN')</span>
+							</div>
+						@endif
 						<div class="product-count">
 							@if( $content->count && $content->count > 0 )
 								<strong>
@@ -108,9 +110,8 @@
 				</div>
 				<div class="product-description col-md">
 					<h3>
-						@lang('Описание')
+						<span>@lang('Описание')</span>
 					</h3>
-					<hr>
 					<p>
 						{!! html_entity_decode($content->description) !!}
 					</p>
