@@ -10,13 +10,20 @@
 			</a>
 		</div>
 		<h2>{{ $title }}</h2>
+		<hr>
 		
-		<div class="row">
+		<div class="row ml-0 mr-0">
 			@if( isset($list) && count($list) > 0 )
 				@foreach($list as $item)
-					<div class="col-md-4">
-						<a href="{{ route($route_name, $item->id) }}">
+					<div class="col-md-4 clearfix admin-list-item">
+						<a href="{{ route($view_route, $item->id) }}">
 							{{ $item->title }}
+						</a>
+						<a href="{{ route($delete_route, $item->id) }}" class="additional-links float-right">
+							<i class="far fa-trash-alt"></i>
+						</a>
+						<a href="{{ route($edit_route, $item->id) }}" class="additional-links float-right">
+							<i class="fas fa-pencil-alt"></i>
 						</a>
 					</div>
 				@endforeach

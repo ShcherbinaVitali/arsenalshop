@@ -58,6 +58,24 @@ dl, ol, ul {
 .footer-wrap {
 	background: #32333d;
 }
+.footer-links-wrap {
+	background-color: #202128;
+	border-top: 3px solid #d1213e;
+}
+.footer-links p,
+.footer-links h3,
+.footer-links a {
+	color: #b9babc;
+}
+.footer-links-item {
+	margin: 20px 0;
+}
+.footer-links-item h3 {
+	margin-bottom: 30px;
+}
+.footer-links-item a:hover {
+	color: #d1213e;
+}
 .top-menu-wrap {
 	background: #f5f8fa;
 }
@@ -139,8 +157,51 @@ dl, ol, ul {
 .errors-danger strong {
 	color: #cb3b27;
 }
+
+.admin.page-container {
+	padding-top: 20px;
+}
 .admin-wrap .panel-body {
 	line-height: 34px;
+}
+.admin-wrap .panel-menu ul {
+	background-color: aliceblue;
+	margin-top: 10px;
+}
+.admin-wrap .panel-menu ul li {
+	display: inline-block;
+}
+.admin-wrap .panel-menu ul li a {
+	display: inline-block;
+	padding: 10px;
+}
+.admin-wrap .panel-menu ul li:hover {
+	background-color: #939ca0;
+}
+.admin-wrap .panel-menu ul li:hover a {
+	color: #ffffff;
+}
+.admin-list-wrap h2 {
+	margin-top: 20px;
+}
+.additional-links {
+	opacity: 0;
+	margin: 0 10px;
+}
+.admin-list-item {
+	padding: 10px 0;
+	padding-left: 10px;
+}
+.admin-list-item:hover {
+	background-color: #f5f8fa;
+}
+.admin-list-item:hover .additional-links {
+	opacity: 1;
+	-webkit-transition: opacity .2s ease;
+	-moz-transition: opacity .2s ease;
+	-ms-transition: opacity .2s ease;
+	-o-transition: opacity .2s ease;
+	transition: opacity .2s ease;
 }
 .top-menu {
 	list-style-type: none;

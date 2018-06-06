@@ -57,6 +57,15 @@ class AppHelper {
 		return $categories;
 	}
 	
+	public static function getRootCategories() {
+		$categories = Category::where([
+			[self::IS_ACTIVE_TITLE, '=', self::IS_ACTIVE_VALUE],
+			['parent_id', '=', 0]
+		])->get();
+		
+		return $categories;
+	}
+	
 	public static function getCurrentAdmin() {
 		return Auth::user();
 	}

@@ -9,21 +9,20 @@
 		<div class="row">
 			<div class="col-md">
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="{{ route('admin.dashboard') }}">Dashboard</a>
-					</div>
-					
 					<div class="panel-body clearfix">
 						<div class="float-left">
-							You are logged in as <strong>{{ $admin->name }}</strong>
+							@lang('Вы вошли как ') <strong>{{ $admin->name }}</strong>
 						</div>
 						<div class="float-right">
-							<a href="{{ route('admin.logout') }}" class="btn btn-secondary">Logout</a>
+							<a href="{{ route('admin.logout') }}" class="btn btn-secondary">@lang('Выйти')</a>
 						</div>
 					</div>
 					<div class="panel-content">
-						<div class="panel-menu">
+						<div class="panel-menu text-center">
 							<ul>
+								<li class="float-left">
+									<a href="{{ route('admin.dashboard') }}">@lang('Доска')</a>
+								</li>
 								<li>
 									<a href="{{ route('admin.static-pages') }}">
 										@lang('Страницы')
@@ -37,6 +36,11 @@
 								<li>
 									<a href="{{ route('admin.products') }}">
 										@lang('Товары')
+									</a>
+								</li>
+								<li class="float-right">
+									<a href="{{ route('home') }}" target="_blank">
+										@lang('Открыть Сайт')
 									</a>
 								</li>
 							</ul>

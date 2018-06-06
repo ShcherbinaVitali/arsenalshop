@@ -40,11 +40,13 @@ class AdminController extends Controller {
 		return view(
 			'pages.panel.list',
 			[
-				'title'      => 'Список Страниц',
-				'btn_title'  => 'Добавить страницу',
-				'btn_route'  => 'admin.static-pages.add',
-				'route_name' => 'admin.static-pages.page',
-				'list'       => $pages
+				'title'        => 'Список Страниц',
+				'btn_title'    => 'Добавить страницу',
+				'btn_route'    => 'admin.static-pages.add',
+				'view_route'   => 'admin.static-pages.page',
+				'edit_route'   => 'admin.static-pages.edit',
+				'delete_route' => 'admin.static-pages.delete',
+				'list'         => $pages
 			]
 		);
 	}
@@ -141,11 +143,13 @@ class AdminController extends Controller {
 		return view(
 			'pages.panel.list',
 			[
-				'title'      => 'Список Категорий',
-				'btn_title'  => 'Добавить категорию',
-				'btn_route'  => 'admin.categories.add',
-				'route_name' => 'admin.categories.category',
-				'list'       => $categories
+				'title'        => 'Список Категорий',
+				'btn_title'    => 'Добавить категорию',
+				'btn_route'    => 'admin.categories.add',
+				'view_route'   => 'admin.categories.category',
+				'edit_route'   => 'admin.categories.edit',
+				'delete_route' => 'admin.categories.delete',
+				'list'         => $categories
 			]
 		);
 	}
@@ -254,11 +258,13 @@ class AdminController extends Controller {
 		return view(
 			'pages.panel.list',
 			[
-				'title'      => 'Список Товаров',
-				'btn_title'  => 'Добавить товар',
-				'btn_route'  => 'admin.products.add',
-				'route_name' => 'admin.products.product',
-				'list'       => $products
+				'title'        => 'Список Товаров',
+				'btn_title'    => 'Добавить товар',
+				'btn_route'    => 'admin.products.add',
+				'view_route'   => 'admin.products.product',
+				'edit_route'   => 'admin.products.edit',
+				'delete_route' => 'admin.products.delete',
+				'list'         => $products
 			]
 		);
 	}
