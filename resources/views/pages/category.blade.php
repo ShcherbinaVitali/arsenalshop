@@ -9,8 +9,8 @@
 	<div class="content col-sm-8 col-md-8 col-lg-8">
 		<hr>
 		<div>
-			@if($content)
-				<h1>
+			@if( $content )
+				<h1 class="category-title">
 					{{ $content->title }}
 				</h1>
 				@if(isset($content->subcategories) && count($content->subcategories) > 0)

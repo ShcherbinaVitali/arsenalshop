@@ -22,13 +22,20 @@
 							<a href="{{ route('catalog.category', $item->alias) }}">
 								{{ $item->title }}
 							</a>
+							
 							@if( count($item->subcategories) > 0 )
+								<span class="left-menu-title">
+									@lang('Подкатегории')
+								</span>
 								@include('layouts.catalog-menu-item',
 									['parent_alias' => $item->alias, 'children' => $item->subcategories]
 								)
 							@endif
 							
 							@if( count($item->products) > 0 )
+								<span class="left-menu-title">
+									@lang('Продукты')
+								</span>
 								@include('layouts.catalog-menu-product',
 									['parent_alias' => $item->alias, 'products' => $item->products]
 								)

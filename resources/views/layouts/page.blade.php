@@ -46,6 +46,8 @@
 				@yield('content')
 			</div>
 		</div>
+		
+		@include('layouts.footer-links')
 		@include('layouts.footer')
 		
 		<div class="up">
