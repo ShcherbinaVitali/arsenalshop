@@ -263,6 +263,9 @@ dl, ol, ul {
 .menu {
 	border: 1px solid #afafaf;
 }
+.left-menu {
+	margin: 20px auto 0;
+}
 .left-menu-title {
 	font-size: 11px;
 	font-weight: 600;
@@ -462,6 +465,9 @@ li.category-menu-item.item-active ul > li {
 }
 .info-panel .page-title h1:first-letter {
 	text-transform: uppercase;
+}
+.home-page-content {
+	margin: 30px auto 0;
 }
 
 .product-btn {

@@ -19,9 +19,15 @@ class AppHelper {
 	public static function getPages() {
 		$pages = Page::all();
 		
-		$activePages = $pages->whereStrict(
+		$activePages = $pages->where(
 			self::IS_ACTIVE_TITLE,
+			'=',
 			self::IS_ACTIVE_VALUE
+		)
+		->where(
+			'alias',
+			'!=',
+			'home'
 		);
 		
 		return $activePages;
