@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\AppHelper;
@@ -38,5 +39,28 @@ class MainController extends Controller {
 		$pages = AppHelper::getPages();
 		
 		return view("pages.page-list", ['pages' => $pages]);
+	}
+	
+	public function search(Request $request) {
+		$query    = $request->get('query');
+		$products = Product::all();
+		
+		$productResult = $products->filter(function ($product) use ($query) {
+			return mb_strpos(strtolower($product->title), strtolower($query)) !== false 
+				|| mb_strpos(strtolower($product->description), strtolower($query)) !== false
+			;
+		});
+		
+		if ( $productResult && count($productResult) > 0 ) {
+			return view(
+				"pages.search",
+				[
+					'query'          => $query,
+					'product_result' => $productResult
+				]
+			);
+		}
+		
+		return view("pages.search", ['query' => $query]);
 	}
 }

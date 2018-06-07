@@ -7,9 +7,9 @@
 				<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 			</ul>
 			<div class="header-search float-right">
-				<form action="" method="post">
-					<input class="input search-input" type="text" placeholder="@lang('Поиск')">
-					<button class="search-btn"><i class="fa fa-search"></i></button>
+				<form action="{{ route('search') }}" method="get">
+					<input class="input search-input" name="query" type="text" placeholder="@lang('Поиск')" required>
+					<button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
 				</form>
 			</div>
 		</div>

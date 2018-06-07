@@ -13,6 +13,11 @@ Route::prefix('catalog')->group(function () {
 	
 });
 
+Route::prefix('search')->group(function () {
+	Route::get('/', 'MainController@search')->name('search');
+	//Route::get('results/{query}', 'MainController@results')->name('search.results');
+});
+
 Auth::routes();
 Route::prefix('admin')->group(function() {
 	Route::get('/', 'AuthController@showLoginForm')->name('admin.login.form');
