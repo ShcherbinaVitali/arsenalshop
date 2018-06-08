@@ -1,15 +1,10 @@
 @extends('layouts.page')
 
 @section('header.styles')
-	@parent
+	<link rel="stylesheet" href="/css/vendor/slick/slick.css">
+	<link rel="stylesheet" href="/css/vendor/slick/slick-theme.css">
 	
-	<link rel="stylesheet" href="/css/vendor/xzoom/xzoom.css">
-@endsection
-
-@section('header.scripts')
 	@parent
-	
-	<script src="/js/vendor/xzoom/xzoom.min.js"></script>
 @endsection
 
 @section('meta-tags')
@@ -22,27 +17,29 @@
 	<div class="content col-sm-8 col-md-8 col-lg-8">
 		<hr>
 		<div class="container">
-			<div class="product-wrap row">
+			<div class="product-wrap row clearfix">
 				<div class="product-image-wrap col-md-7">
-					<div class="product-image">
-						@if( isset($content->images) && count($content->images) > 0 )
-							<div class="xzoom-container">
-								<img class="xzoom" src="{{ asset("storage/images/products/{$content->id}/{$content->images[0]->name}") }}" xoriginal="{{ asset("storage/images/products/{$content->id}/{$content->images[0]->name}") }}" />
-								<div class="xzoom-thumbs">
-									@foreach($content->images as $image)
-										<a href="{{ asset("storage/images/products/{$content->id}/{$image->name}") }}">
-											<img class="xzoom-gallery" width="80" src="{{ asset("storage/images/products/{$content->id}/{$image->name}") }}"  xpreview="{{ asset("storage/images/products/{$content->id}/{$image->name}") }}">
-										</a>
-									@endforeach
+					@if( isset($content->images) && count($content->images) > 0 )
+						<div id="product-slider">
+							@foreach($content->images as $image)
+								<div class="product-view">
+									<img src="{{ asset("storage/images/products/{$content->id}/{$image->name}") }}">
 								</div>
-							</div>
-						@else
-							<div class="default-product-img">
-								<img src="{{ asset('images/general/default-prod-img.svg') }}" 
-									alt="{{ $content->title }}">
-							</div>
-						@endif
-					</div>
+							@endforeach
+						</div>
+						<div id="product-view">
+							@foreach($content->images as $image)
+								<div class="product-view">
+									<img src="{{ asset("storage/images/products/{$content->id}/{$image->name}") }}">
+								</div>
+							@endforeach
+						</div>
+					@else
+						<div class="default-product-img">
+							<img src="{{ asset('images/general/default-prod-img.svg') }}" 
+								alt="{{ $content->title }}">
+						</div>
+					@endif
 				</div>
 				<div class="info-block col-md-5">
 					<div class="info-panel">
@@ -121,14 +118,27 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-			$('.xzoom, .xzoom-gallery').xzoom({
-				zoomWidth: 300,
-				title: false,
-				tint: '#333',
-				Xoffset: 15,
-				adaptive: true
+			$('#product-slider').slick({
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				infinite: true,
+				speed: 300,
+				dots: false,
+				arrows: true,
+				fade: true,
+				asNavFor: '#product-view',
 			});
 			
+			$('#product-view').slick({
+				slidesToShow: 2,
+				slidesToScroll: 1,
+				arrows: true,
+				centerMode: true,
+				focusOnSelect: true,
+				asNavFor: '#product-slider',
+			});
+			
+			$('#product-slider .product-view').zoom();
 		});
 	</script>
 @endsection
@@ -159,4 +169,7 @@
 			</div>
 		</div>
 	</div>
+	
+	<script src="/js/vendor/jquery.zoom.min.js"></script>
+	<script src="/js/vendor/slick/slick.min.js"></script>
 @endsection
