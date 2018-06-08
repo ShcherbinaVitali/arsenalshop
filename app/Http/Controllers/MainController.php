@@ -42,7 +42,7 @@ class MainController extends Controller {
 	}
 	
 	public function search(Request $request) {
-		$query    = $request->get('query');
+		$query    = strip_tags($request->get('query'));
 		$products = Product::all();
 		
 		$productResult = $products->filter(function ($product) use ($query) {
