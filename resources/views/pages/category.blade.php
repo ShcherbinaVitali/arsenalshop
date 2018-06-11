@@ -8,7 +8,7 @@
 @section('content')
 	<div class="content col-sm-8 col-md-8 col-lg-8">
 		<hr>
-		<div>
+		<div class="catalog-list">
 			@if( $content )
 				<h1 class="category-title">
 					{{ $content->title }}
@@ -16,8 +16,13 @@
 				@if(isset($content->subcategories) && count($content->subcategories) > 0)
 					<div class="container">
 						<div class="row">
+							<div class="subtitle">
+								<h4>
+									@lang('Подкатегории')
+								</h4>
+							</div>
 							@foreach($content->subcategories as $subcategory)
-								<div class="col-md-12">
+								<div class="col-md-12 category-item">
 									<a href="{{ route('catalog.category',[$content->alias, $subcategory->alias]) }}">
 										{{ $subcategory->title }}
 									</a>
@@ -29,8 +34,49 @@
 				@if(isset($content->products) && count($content->products) > 0)
 					<div class="container product-list">
 						<div class="row">
+							<div class="subtitle">
+								<h4>
+									@lang('Продукты')
+								</h4>
+							</div>
+							@php
+								$countOnPageArr   = \App\Helpers\AppHelper::PRODUCT_ON_PAGE_ARR;
+								$countOnPage      = 10;
+								$countFromSession = session()->get('product-count');
+								if ( $countFromSession && $countFromSession > 0 ) {
+									$countOnPage = $countFromSession;
+								}
+							@endphp
+								<div class="product-count col-md-12">
+									<form action="{{ url("catalog/products-on-page") }}" method="post">
+										@csrf
+										<div class="form-group text-right">
+											<label for="#product-count-on-page">@lang('Количество продуктов')</label>
+											<select id="product-count-on-page" class="product-count-on-page form-control" name="count">
+												@foreach($countOnPageArr as $countProduct)
+													<option value="{{ $countProduct }}"
+															@if($countProduct == $countFromSession)
+															selected
+															@endif>
+														{{ $countProduct }}
+													</option>
+												@endforeach
+											</select>
+										</div>
+									</form>
+								</div>
+							@php
+								$products = $content->products()->paginate($countOnPage);
+							@endphp
+							<script>
+								$(document).ready(function () {
+									$('.product-count-on-page').on('change', function () {
+										$(this).closest('form').submit();
+									});
+								});
+							</script>
 							<ul>
-								@foreach($content->products as $product)
+								@foreach($products as $product)
 									<li class="col-md-12">
 										<a href="{{ route('catalog.category', [$content->alias, $product->alias]) }}" class="container">
 											<div class="row">
@@ -98,12 +144,17 @@
 									</li>
 								@endforeach
 							</ul>
+							<div class="pagination-wrap">
+								<nav aria-label="Page navigation">
+									{{ $products->links() }}
+								</nav>
+							</div>
 						</div>
 					</div>
 				@else
-					<div>
+					<div class="no-products">
 						<h4>
-							@lang('В данной категории нет продуктов')
+							@lang('В данной категории нет товаров')
 						</h4>
 					</div>
 				@endif

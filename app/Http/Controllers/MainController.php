@@ -63,4 +63,13 @@ class MainController extends Controller {
 		
 		return view("pages.search", ['query' => $query]);
 	}
+	
+	public function setProductOnPage(Request $request) {
+		$count = $request->count;
+		if ($count) {
+			AppHelper::setPagesCountOnPage($count);
+		}
+		
+		return redirect()->back();
+	}
 }

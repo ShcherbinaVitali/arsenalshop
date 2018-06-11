@@ -7,11 +7,19 @@ use App\Page;
 use App\Product;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AppHelper {
 	
 	const IS_ACTIVE_TITLE = 'is_active';
 	const IS_ACTIVE_VALUE = 1;
+	
+	const PRODUCT_ON_PAGE_ARR = [
+		1,
+		10,
+		15,
+		20
+	];
 	
 	/**
 	 * @return \Illuminate\Database\Eloquent\Collection|static[]
@@ -74,5 +82,11 @@ class AppHelper {
 	
 	public static function getCurrentAdmin() {
 		return Auth::user();
+	}
+	
+	public static function setPagesCountOnPage($count) {
+		Session::put('product-count', $count);
+		
+		return true;
 	}
 }
