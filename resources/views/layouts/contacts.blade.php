@@ -1,4 +1,9 @@
-<div class="contacts-wrap">
-	<span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>555 55 55</strong></span>
-	<span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>555 55 55</strong></span>
-</div>
+@php
+	$contacts = \App\Helpers\AppHelper::getFromInfoByTitle('contacts');
+@endphp
+
+@if( $contacts )
+	<div class="contacts-wrap">
+		{!! html_entity_decode($contacts->content) !!}
+	</div>
+@endif

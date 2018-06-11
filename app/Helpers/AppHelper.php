@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Category;
+use App\Info;
 use App\Page;
 use App\Product;
 
@@ -88,5 +89,11 @@ class AppHelper {
 		Session::put('product-count', $count);
 		
 		return true;
+	}
+	
+	public static function getFromInfoByTitle($title) {
+		$infoModel = Info::where('title', '=', $title)->get()->first();
+		
+		return $infoModel;
 	}
 }

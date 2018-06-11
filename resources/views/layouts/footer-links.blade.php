@@ -1,19 +1,20 @@
 @php
 	$categories = \App\Helpers\AppHelper::getRootCategories();
 	$pages      = \App\Helpers\AppHelper::getPages();
+	$aboutInfo  = \App\Helpers\AppHelper::getFromInfoByTitle('footer_about');
 @endphp
 
 <div class="footer-links-wrap">
 	<div class="footer-links container">
 		<div class="row">
-			<div class="col-md-4 footer-links-item">
-				<h3>
-					@lang('О нас')
-				</h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium aperiam at beatae deserunt libero nemo nihil officia officiis provident quasi quidem quisquam tempore velit, voluptates! Culpa praesentium quae vel!
-				</p>
-			</div>
+			@if( $aboutInfo )
+				<div class="col-md-4 footer-links-item">
+					<h3>
+						@lang('О нас')
+					</h3>
+					{!! html_entity_decode($aboutInfo->content) !!}
+				</div>
+			@endif
 			@if( $categories && count($categories) > 0 )
 				<div class="col-md-4 footer-links-item">
 					<h3>
