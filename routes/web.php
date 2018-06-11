@@ -24,6 +24,14 @@ Route::prefix('admin')->group(function() {
 	Route::post('/login', 'AuthController@login')->name('admin.signin');
 	Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
 	
+	Route::get('/main-info', 'AdminController@mainInfo')->name('admin.main-info');
+	Route::get('/main-info/{id}', 'AdminController@info')->where('id', '[0-9]+')->name('admin.main-info.info');
+	Route::get('/main-info/add', 'AdminController@addInfo')->name('admin.main-info.add');
+	Route::get('/main-info/edit/{id?}', 'AdminController@editInfo')->where('id', '[0-9]+')->name('admin.main-info.edit');
+	Route::post('/main-info/save', 'AdminController@saveInfo')->name('admin.main-info.save');
+	Route::get('/main-info/delete/{id}', 'AdminController@deleteInfo')->where('id', '[0-9]+')->name('admin.main-info.delete');
+	
+	
 	Route::get('/static-pages', 'AdminController@staticPages')->name('admin.static-pages');
 	Route::get('/static-pages/{id}', 'AdminController@page')->where('id', '[0-9]+')->name('admin.static-pages.page');
 	Route::get('/static-pages/add', 'AdminController@addPage')->name('admin.static-pages.add');

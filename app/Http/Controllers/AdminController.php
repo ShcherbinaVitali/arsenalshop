@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Info;
 use App\Page;
 use App\Helpers\AppHelper;
 use App\Product;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rules\In;
 
 class AdminController extends Controller {
 	/**
@@ -454,5 +456,108 @@ class AdminController extends Controller {
 		}
 		
 		return redirect()->route('admin.products')->with('message', $message);
+	}
+	
+	public function mainInfo() {
+		$info = Info::all();
+		
+		return view(
+			'pages.panel.list',
+			[
+				'title'        => 'Основная информация',
+				'btn_title'    => 'Добавить',
+				'btn_route'    => 'admin.main-info.add',
+				'view_route'   => 'admin.main-info.info',
+				'edit_route'   => 'admin.main-info.edit',
+				'delete_route' => 'admin.main-info.delete',
+				'list'         => $info
+			]
+		);
+	}
+	
+	public function info($id) {
+		$info = Info::findOrFail($id);
+		
+		return view(
+			'pages.panel.info.view',
+			[
+				'info' => $info
+			]
+		);
+	}
+	
+	public function addInfo() {
+		$request = Request::create(route('admin.main-info.edit'), 'GET');
+		
+		return Route::dispatch($request);
+	}
+	
+	public function editInfo($id = 0) {
+		if ($id != 0) {
+			$infoModel = Info::findOrFail($id);
+			
+			return view(
+				'pages.panel.info.edit',
+				[
+					'info' => $infoModel
+				]
+			);
+		}
+		else {
+			return view(
+				'pages.panel.info.edit'
+			);
+		}
+	}
+	
+	public function saveInfo(Request $request) {
+		$data    = $request->all();
+		$message = 'Error saving Info';
+		$id      = '';
+		$data['content'] = e($data['content']);
+		
+		if (isset($data['id'])) {
+			$id = $data['id'];
+			unset($data['id']);
+		}
+		
+		if ( $data && count($data) > 0 ) {
+			if ( $id ) {
+				$infoModel = Info::findOrFail($id);
+				
+				$infoModel->fill($data);
+				try {
+					$infoModel->save();
+					$message = "The Info ID: {$infoModel->id} is updated successfully";
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+			else {
+				$infoModel = new Info;
+				$infoModel->fill($data);
+				
+				try {
+					$infoModel->save();
+					$message = 'The Info is created successfully';
+				}
+				catch (\Exception $e) {
+					$message = $e->getMessage();
+				}
+			}
+		}
+		
+		return redirect()->route('admin.main-info')->with('message', $message);
+	}
+	
+	public function deleteInfo($id) {
+		$message = 'Error deleting Info';
+		if ($id) {
+			Info::destroy($id);
+			$message = 'Info is deleted successfully';
+		}
+		
+		return redirect()->route('admin.main-info')->with('message', $message);
 	}
 }

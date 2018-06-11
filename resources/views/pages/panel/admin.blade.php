@@ -24,6 +24,11 @@
 									<a href="{{ route('admin.dashboard') }}">@lang('Доска')</a>
 								</li>
 								<li>
+									<a href="{{ route('admin.main-info') }}">
+										@lang('Основная информация')
+									</a>
+								</li>
+								<li>
 									<a href="{{ route('admin.static-pages') }}">
 										@lang('Страницы')
 									</a>
