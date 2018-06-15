@@ -22,8 +22,11 @@
 								</h4>
 							</div>
 							@foreach($content->subcategories as $subcategory)
+								@php
+									$subcategoryUrl = \App\Helpers\AppHelper::getFullUrlForItem($subcategory);
+								@endphp
 								<div class="col-md-12 category-item">
-									<a href="{{ route('catalog.category',[$content->alias, $subcategory->alias]) }}">
+									<a href="{{ route('catalog.category', $subcategoryUrl) }}">
 										{{ $subcategory->title }}
 									</a>
 								</div>
@@ -78,7 +81,10 @@
 							<ul>
 								@foreach($products as $product)
 									<li class="col-md-12">
-										<a href="{{ route('catalog.category', [$content->alias, $product->alias]) }}" class="container">
+										@php
+											$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
+										@endphp
+										<a href="{{ route('catalog.category', $productUrl) }}" class="container">
 											<div class="row">
 												@if( count($product->images) > 0 )
 													<div class="preview-image col-md-4">

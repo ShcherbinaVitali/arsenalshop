@@ -104,4 +104,35 @@ class AppHelper {
 		
 		return false;
 	}
+	
+	public static function getFullUrlForItem($item) {
+		$url = [];
+		if ( $item instanceof Product ) {
+			$url[]    = $item->alias;
+			$category = $item->category;
+		}
+		elseif ($item instanceof Category) {
+			$category = $item;
+		}
+		
+		$url[] = $category->alias;
+		
+		$category = self::getParentCategory($category);
+		if ( $category ) {
+			$url[]    = $category->alias;
+			
+			while ($category->parentCategory) {
+				$category = self::getParentCategory($category);
+				$url[]    = $category->alias;
+			}
+		}
+		$url = array_reverse($url);
+		$url = implode('/', $url);
+		
+		if ( !$url ) {
+			$url = '';
+		}
+		
+		return $url;
+	}
 }
