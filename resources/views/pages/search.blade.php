@@ -21,9 +21,9 @@
 								</div>
 								{!! html_entity_decode($item->description) !!}
 							</div>
-							<a href="{{ route('catalog.category', $item->alias) }}" class="product-more">
-								@lang('Подробнее...')
-							</a>
+							
+							@include('layouts.more-link', ['product' => $item])
+							
 						</div>
 					@endforeach
 				@else
