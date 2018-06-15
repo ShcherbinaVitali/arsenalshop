@@ -96,4 +96,12 @@ class AppHelper {
 		
 		return $infoModel;
 	}
+	
+	public static function getParentCategory($category) {
+		if ( $category->parentCategory ) {
+			return $category->parentCategory;
+		}
+		
+		return false;
+	}
 }
