@@ -690,6 +690,9 @@ span.discounted-currency {
 .no-products {
 	margin-top: 15px;
 }
+.product-list .subtitle {
+	margin-top: 15px;
+}
 .subtitle h4 {
 	font-size: 0.8rem;
 }
