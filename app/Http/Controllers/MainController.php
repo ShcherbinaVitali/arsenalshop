@@ -42,26 +42,31 @@ class MainController extends Controller {
 	}
 	
 	public function search(Request $request) {
-		$query    = strip_tags($request->get('query'));
-		$products = Product::all();
-		
-		$productResult = $products->filter(function ($product) use ($query) {
-			return mb_strpos(strtolower($product->title), strtolower($query)) !== false 
-				|| mb_strpos(strtolower($product->description), strtolower($query)) !== false
-			;
-		});
-		
-		if ( $productResult && count($productResult) > 0 ) {
-			return view(
-				"pages.search",
-				[
-					'query'          => $query,
-					'product_result' => $productResult
-				]
-			);
+		$message = 'Пустой запрос';
+		$query   = strip_tags($request->get('query'));
+		if ( $query ) {
+			$products = Product::all();
+			
+			$productResult = $products->filter(function ($product) use ($query) {
+				return mb_strpos(strtolower($product->title), strtolower($query)) !== false
+					|| mb_strpos(strtolower($product->description), strtolower($query)) !== false
+					;
+			});
+			
+			if ( $productResult && count($productResult) > 0 ) {
+				return view(
+					"pages.search",
+					[
+						'query'          => $query,
+						'product_result' => $productResult
+					]
+				);
+			}
+			
+			return view("pages.search", ['query' => $query]);
 		}
 		
-		return view("pages.search", ['query' => $query]);
+		return redirect()->route('home')->with('p_message', $message);
 	}
 	
 	public function setProductOnPage(Request $request) {

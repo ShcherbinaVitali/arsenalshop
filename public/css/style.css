@@ -154,7 +154,9 @@ dl, ol, ul {
 	cursor: pointer;
 }
 
-
+.messages {
+	margin-top: 20px;
+}
 .errors-danger strong {
 	color: #cb3b27;
 }
