@@ -302,7 +302,7 @@ ul li.category-menu-item a {
 }
 .menu ul > li > a:hover {
 	font-weight: 600;
-	padding-left: 25px;
+	padding-left: 40px;
 }
 
 li.category-menu-item ul li {
@@ -361,6 +361,7 @@ li.category-menu-item.item-active > ul li a:hover {
 }
 li.category-menu-item.item-active > a {
 	font-weight: 600;
+	color: #d1213e;
 }
 li.category-menu-item.item-active ul > li {
 	max-height: inherit;

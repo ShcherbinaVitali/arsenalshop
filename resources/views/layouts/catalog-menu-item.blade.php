@@ -12,14 +12,6 @@
 				)
 			@endif
 			
-			@if( count($child->products) > 0 )
-				<span class="left-menu-title pl-4">
-					@lang('Продукты')
-				</span>
-				@include('layouts.catalog-menu-product',
-					['parent_alias' => $parentAlias, 'products' => $child->products]
-				)
-			@endif
 		</li>
 	@endforeach
 </ul>
