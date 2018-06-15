@@ -135,4 +135,47 @@ class AppHelper {
 		
 		return $url;
 	}
+	
+	public static function getBreadcrumbsByModel($model) {
+		$breadcrumbs = [];
+		if ( $model instanceof Product ) {
+			$breadcrumbs[] = [
+				'alias' => $model->alias,
+				'title' => $model->title
+			];
+			
+			$category = $model->category;
+		}
+		elseif ($model instanceof Category) {
+			$category = $model;
+		}
+		
+		$breadcrumbs[] = [
+			'alias' => $category->alias,
+			'title' => $category->title
+		];
+		
+		$category = self::getParentCategory($category);
+		if ( $category ) {
+			$breadcrumbs[] = [
+				'alias' => $category->alias,
+				'title' => $category->title
+			];
+			
+			while ($category->parentCategory) {
+				$category = self::getParentCategory($category);
+				$breadcrumbs[] = [
+					'alias' => $category->alias,
+					'title' => $category->title
+				];
+			}
+		}
+		$breadcrumbs = array_reverse($breadcrumbs);
+		
+		if ( !$breadcrumbs ) {
+			$breadcrumbs = '';
+		}
+		
+		return $breadcrumbs;
+	}
 }
