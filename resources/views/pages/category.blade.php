@@ -55,7 +55,7 @@
 											<select id="product-count-on-page" class="product-count-on-page form-control" name="count">
 												@foreach($countOnPageArr as $countProduct)
 													<option value="{{ $countProduct }}"
-															@if($countProduct == $countFromSession)
+															@if($countProduct == $countOnPage)
 															selected
 															@endif>
 														{{ $countProduct }}
