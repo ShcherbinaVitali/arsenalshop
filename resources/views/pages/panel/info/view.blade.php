@@ -15,10 +15,10 @@
 						<a href="{{ $backUrl }}" class="btn btn-secondary">
 							@lang('Назад')
 						</a>
-						<a href="{{ route('admin.main-info.edit', $product->id) }}" class="btn btn-primary">
+						<a href="{{ route('admin.main-info.edit', $info->id) }}" class="btn btn-primary">
 							@lang('Редактировать')
 						</a>
-						<a href="{{ route('admin.main-info.delete', $product->id) }}" class="btn btn-danger">
+						<a href="{{ route('admin.main-info.delete', $info->id) }}" class="btn btn-danger">
 							@lang('Удалить')
 						</a>
 					</div>

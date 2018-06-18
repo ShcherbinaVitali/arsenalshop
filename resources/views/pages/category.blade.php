@@ -6,14 +6,14 @@
 @endsection
 
 @section('content')
-	<div class="content col-sm-8 col-md-8 col-lg-8">
+	<div class="content col-sm-9 col-md-9 col-lg-9">
 		<hr>
 		<div class="catalog-list">
 			@if( $content )
 				<h1 class="category-title">
 					{{ $content->title }}
 				</h1>
-				@if(isset($content->subcategories) && count($content->subcategories) > 0)
+				@if( isset($content->subcategories) && count($content->subcategories) > 0 )
 					<div class="container">
 						<div class="row">
 							<div class="subtitle">

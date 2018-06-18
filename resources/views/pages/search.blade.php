@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-	<div class="col-md-8">
+	<div class="col-sm-9 col-md-9 col-lg-9">
 		<div class="search-results container">
 			<h1>@lang('Результаты поиска') "@php echo $query; @endphp"</h1>
 			<div class="row">
@@ -19,7 +19,9 @@
 								<div class="search-description">
 									<h4>@lang('Описание')</h4>
 								</div>
-								{!! html_entity_decode($item->description) !!}
+								<div>
+									{!! \App\Helpers\AppHelper::cutTextByChars(html_entity_decode($item->description)) !!}
+								</div>
 							</div>
 							
 							@include('layouts.more-link', ['product' => $item])

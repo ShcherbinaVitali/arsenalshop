@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-	<div class="content col-sm-8 col-md-8 col-lg-8 home-page">
+	<div class="content col-sm-9 col-md-9 col-lg-9 home-page">
 		<div class="home-page-content">
 			@if( isset($content) )
 				{!! html_entity_decode($content->content) !!}
