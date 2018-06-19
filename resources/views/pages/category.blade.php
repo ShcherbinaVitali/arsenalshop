@@ -51,7 +51,25 @@
 								}
 							@endphp
 								<div class="product-count col-md-12">
-									<form action="{{ url("catalog/products-on-page") }}" method="post">
+									<form action="{{ url("catalog/view-products") }}" method="post">
+										@csrf
+										<div class="text-left d-inline">
+											<input type="hidden" name="view_products" value="grid">
+											<button type="submit">
+												<i class="fas fa-th-large"></i>
+											</button>
+										</div>
+									</form>
+									<form action="{{ url("catalog/view-products") }}" method="post">
+										@csrf
+										<div class="text-left d-inline">
+											<input type="hidden" name="view_products" value="list">
+											<button type="submit">
+												<i class="fas fa-th-list"></i>
+											</button>
+										</div>
+									</form>
+									<form action="{{ url("catalog/products-on-page") }}" method="post" class="count_on_page">
 										@csrf
 										<div class="form-group text-right">
 											<label for="#product-count-on-page">@lang('Количество продуктов')</label>
@@ -78,78 +96,151 @@
 									});
 								});
 							</script>
-							<ul>
-								@foreach($products as $product)
-									<li class="col-md-12">
-										@php
-											$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
-										@endphp
-										<a href="{{ route('catalog.category', $productUrl) }}" class="container">
-											<div class="row">
-												@if( count($product->images) > 0 )
-													<div class="preview-image col-md-4">
-														@php
-															$previewImg = $product->images[0];
-														@endphp
-														<img src="{{ asset("storage/images/products/{$product->id}/{$previewImg->name}") }}"
-															 alt="{{ $product->title }}">
-													</div>
-												@else
-													<div class="preview-image col-md-4">
-														<img src="{{ asset('images/general/default-prod-img.svg') }}"
-															 alt="{{ $product->title }}">
-													</div>
-												@endif
-												<div class="col-md-8">
-													<div class="product-title">
-														<strong>
-															{{ $product->title }}
-														</strong>
-													</div>
-													@if( $product->new || $product->bestseller || $product->discount )
-														<div class="additional-info container">
-															<div class="row text-center">
-																@if( $product->new )
-																	<div class="info-label col-md-4 new">
+							<div class="col-md-12 container products-container">
+								<ul class="row">
+									@foreach($products as $product)
+										@if( !session()->get('product-list') )
+											<li class="col-md-4 product-grid-item">
+												@php
+													$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
+												@endphp
+												<a href="{{ route('catalog.category', $productUrl) }}" class="container">
+													<div class="row">
+														@if( count($product->images) > 0 )
+															<div class="preview-image col-md-12">
+																@php
+																	$previewImg = $product->images[0];
+																@endphp
+																<img src="{{ asset("storage/images/products/{$product->id}/{$previewImg->name}") }}"
+																	 alt="{{ $product->title }}">
+															</div>
+														@else
+															<div class="preview-image col-md-12">
+																<img src="{{ asset('images/general/default-prod-img.svg') }}"
+																	 alt="{{ $product->title }}">
+															</div>
+														@endif
+														<div class="col-md-12">
+															<div class="product-title">
+																<strong>
+																	{{ $product->title }}
+																</strong>
+															</div>
+															@if( $product->new || $product->bestseller || $product->discount )
+																<div class="additional-info container">
+																	<div class="row text-center">
+																		@if( $product->new )
+																			<div class="info-label col-md-4 new">
 																		<span class="align-middle">
 																			@lang('Новинка')
 																		</span>
-																	</div>
-																@endif
-																@if( $product->bestseller )
-																	<div class="info-label col-md-4 bestseller">
+																			</div>
+																		@endif
+																		@if( $product->bestseller )
+																			<div class="info-label col-md-4 bestseller">
 																		<span class="align-middle">
 																			@lang('Хит')
 																		</span>
-																	</div>
-																@endif
-																@if( $product->discount )
-																	<div class="info-label col-md-4 discount">
+																			</div>
+																		@endif
+																		@if( $product->discount )
+																			<div class="info-label col-md-4 discount">
 																		<span class="align-middle">
 																			@lang('Скидка') -{{ $product->discount }}%
 																		</span>
+																			</div>
+																		@endif
 																	</div>
-																@endif
+																</div>
+															@endif
+															<div class="product-price">
+																<strong>
+																	@if( $product->discount )
+																		<s class="old-price">{{ $product->price }} @lang('BYN')</s>
+																		<span class="discounted-price">{{ $product->price - ( $product->price / 100 * $product->discount ) }}</span>
+																	@else
+																		<span>{{ $product->price }}</span>
+																	@endif
+																</strong>
+																<span class="@if ($product->discount) discounted-currency @endif">@lang('BYN')</span>
 															</div>
 														</div>
-													@endif
-													<div class="product-price">
-														<strong>
-															@if( $product->discount )
-																<s class="old-price">{{ $product->price }} @lang('BYN')</s>
-																<span class="discounted-price">{{ $product->price - ( $product->price / 100 * $product->discount ) }}</span>
-															@else
-																<span>{{ $product->price }}</span>
-															@endif
-														</strong>
-														<span class="@if ($product->discount) discounted-currency @endif">@lang('BYN')</span>
 													</div>
-												</div>
-											</div>
-										</a>
-									</li>
-								@endforeach
-							</ul>
+												</a>
+											</li>
+										@else
+											<li class="col-md-12 product-list-item">
+												@php
+													$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
+												@endphp
+												<a href="{{ route('catalog.category', $productUrl) }}" class="container">
+													<div class="row">
+														@if( count($product->images) > 0 )
+															<div class="preview-image col-md-4">
+																@php
+																	$previewImg = $product->images[0];
+																@endphp
+																<img src="{{ asset("storage/images/products/{$product->id}/{$previewImg->name}") }}"
+																	 alt="{{ $product->title }}">
+															</div>
+														@else
+															<div class="preview-image col-md-4">
+																<img src="{{ asset('images/general/default-prod-img.svg') }}"
+																	 alt="{{ $product->title }}">
+															</div>
+														@endif
+														<div class="col-md-8">
+															<div class="product-title">
+																<strong>
+																	{{ $product->title }}
+																</strong>
+															</div>
+															@if( $product->new || $product->bestseller || $product->discount )
+																<div class="additional-info container">
+																	<div class="row text-center">
+																		@if( $product->new )
+																			<div class="info-label col-md-4 new">
+																		<span class="align-middle">
+																			@lang('Новинка')
+																		</span>
+																			</div>
+																		@endif
+																		@if( $product->bestseller )
+																			<div class="info-label col-md-4 bestseller">
+																		<span class="align-middle">
+																			@lang('Хит')
+																		</span>
+																			</div>
+																		@endif
+																		@if( $product->discount )
+																			<div class="info-label col-md-4 discount">
+																		<span class="align-middle">
+																			@lang('Скидка') -{{ $product->discount }}%
+																		</span>
+																			</div>
+																		@endif
+																	</div>
+																</div>
+															@endif
+															<div class="product-price">
+																<strong>
+																	@if( $product->discount )
+																		<s class="old-price">{{ $product->price }} @lang('BYN')</s>
+																		<span class="discounted-price">{{ $product->price - ( $product->price / 100 * $product->discount ) }}</span>
+																	@else
+																		<span>{{ $product->price }}</span>
+																	@endif
+																</strong>
+																<span class="@if ($product->discount) discounted-currency @endif">@lang('BYN')</span>
+															</div>
+														</div>
+													</div>
+												</a>
+											</li>
+										@endif
+									@endforeach
+								</ul>
+							</div>
 							<div class="pagination-wrap">
 								<nav aria-label="Page navigation">
 									{{ $products->links() }}

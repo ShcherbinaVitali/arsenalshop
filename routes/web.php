@@ -11,6 +11,7 @@ Route::prefix('catalog')->group(function () {
 	Route::get('/', 'CategoryController@categoryList')->name('catalog.category-list');
 	Route::get('/{category}/{category2?}/{category3?}/{category4?}/{product?}', 'CategoryController@category')->name('catalog.category');
 	Route::post('products-on-page', 'MainController@setProductOnPage')->name('set.count');
+	Route::post('view-products', 'MainController@setViewProducts')->name('set.view-products');
 });
 
 Route::prefix('search')->group(function () {

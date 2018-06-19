@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\AppHelper;
 use App\Page;
+use Illuminate\Support\Facades\Session;
 
 class MainController extends Controller {
 	
@@ -67,6 +68,26 @@ class MainController extends Controller {
 		}
 		
 		return redirect()->route('home')->with('p_message', $message);
+	}
+	
+	public function setViewProducts(Request $request) {
+		$viewType = $request->view_products;
+		
+		if ($viewType) {
+			switch ($viewType) {
+				case 'list':
+					Session::put('product-list', true);
+				break;
+				default:
+					$sessData = Session::get('product-list');
+					if (isset($sessData)) {
+						Session::forget('product-list');
+					}
+				break;
+			}
+		}
+		
+		return redirect()->back();
 	}
 	
 	public function setProductOnPage(Request $request) {
