@@ -11,6 +11,10 @@ class MainInfoTableSeeder extends Seeder {
 	public function run() {
 		DB::table('main_info')->insert([
 			[
+				'title'   => 'owner_email',
+				'content' => e('test@example.org')
+			],
+			[
 				'title'   => 'contacts',
 				'content' => e('<span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>229 53 04</strong></span><span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>229 53 04</strong></span>')
 			],

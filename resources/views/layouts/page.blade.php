@@ -14,6 +14,8 @@
 		
 		<script src="/js/vendor/bootstrap-4.0.0/bootstrap.min.js"></script>
 		
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+		
 		<link rel="stylesheet" href="/css/vendor/fontawesome/fontawesome-all.min.css">
 		
 		@yield('header.styles')

@@ -44,7 +44,7 @@
 							</div>
 							@php
 								$countOnPageArr   = \App\Helpers\AppHelper::PRODUCT_ON_PAGE_ARR;
-								$countOnPage      = 10;
+								$countOnPage      = \App\Helpers\AppHelper::DEFAULT_PRODUCT_COUNT;
 								$countFromSession = session()->get('product-count');
 								if ( $countFromSession && $countFromSession > 0 ) {
 									$countOnPage = $countFromSession;

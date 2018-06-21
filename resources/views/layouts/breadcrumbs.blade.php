@@ -21,6 +21,9 @@
 					$segments = \App\Helpers\AppHelper::getBreadcrumbsByModel($model);
 					array_unshift($segments, ['alias' => 'catalog', 'title' => 'Каталог']);
 				}
+				elseif ($segments[0] === 'pages' && count($segments) > 1) {
+					$segments[0] = 'Страницы';
+				}
 			@endphp
 			@if( Request::segment(1) === 'catalog' && count(Request::segments()) > 1 )
 				@for($i = 0; $i < count($segments); $i++)
@@ -46,13 +49,20 @@
 							<a href="/{{ $path }}">{{ $segments[$i] }}</a>
 							<span>/</span>
 						@else
-							@if( $segments[$i] === 'catalog' )
-								<span>@lang('Каталог')</span>
-							@elseif( $segments[$i] === 'search' )
-								<span>@lang('Поиск')</span>
-							@else
-								<span>{{ $segments[$i] }}</span>
-							@endif
+							@switch($segments[$i])
+								@case('catalog')
+									<span>@lang('Каталог')</span>
+								@break
+								@case('search')
+									<span>@lang('Поиск')</span>
+								@break
+								@case('pages')
+									<span>@lang('Страницы')</span>
+								@break
+								@default
+									<span>{{ $segments[$i] }}</span>
+								@break
+							@endswitch
 						@endif
 					</li>
 				@endfor

@@ -8,18 +8,21 @@ use App\Page;
 use App\Product;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Request;
 
 class AppHelper {
 	
 	const IS_ACTIVE_TITLE = 'is_active';
 	const IS_ACTIVE_VALUE = 1;
 	
-	const PRODUCT_ON_PAGE_ARR = [
+	const DEFAULT_PRODUCT_COUNT = 9;
+	const PRODUCT_ON_PAGE_ARR   = [
 		1,
-		10,
-		15,
-		20
+		9,
+		18,
+		27
 	];
 	
 	/**
@@ -177,5 +180,53 @@ class AppHelper {
 		}
 		
 		return $breadcrumbs;
+	}
+	
+	public static function cutTextByChars($text, $chars = 200) {
+		//$text = preg_replace('/\s+?(\S+)?$/', '', substr($text, 0, $chars));
+		
+		return $text;
+	}
+	
+	public static function checkCaptcha($recaptchaResponse) {
+		$url      = "https://www.google.com/recaptcha/api/siteverify";
+		$config   = Config::get('additional.creds');
+		$remoteIP = Request::server('REMOTE_ADDR');
+		$secret   = $config['secret'];
+		
+		$postData = http_build_query([
+			'secret'   => $secret,
+			'response' => $recaptchaResponse,
+			'remoteip' => $remoteIP
+		]);
+		
+		$opts = [
+			'http' => [
+				'method'  => 'POST',
+				'header'  => 'Content-Type: application/x-www-form-urlencoded',
+				'content' => $postData
+			]
+		];
+		
+		$gcontents = stream_context_create($opts);
+		
+		$response = file_get_contents($url, false, $gcontents);
+		$result   = json_decode($response, true);
+		
+		if ( !$result ) {
+			$result = false;
+		}
+		
+		return $result;
+	}
+	
+	public static function getCaptchaCreds() {
+		$creds = Config::get('additional.creds');
+		
+		if ( $creds && is_array($creds) ) {
+			return $creds;
+		}
+		
+		return false;
 	}
 }

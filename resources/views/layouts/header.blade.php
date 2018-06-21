@@ -1,3 +1,7 @@
+@php
+	$creds = \App\Helpers\AppHelper::getCaptchaCreds();
+@endphp
+
 <div class="header-wrap">
 	<div class="top-header">
 		<div class="container clearfix">
@@ -45,23 +49,43 @@
 	<div class="modal fade" id="callOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">@lang('Заказать звонок')</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					...
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">
-						@lang('Закрыть')
-					</button>
-					<button type="button" class="btn btn-primary">
-						@lang('Отправить')
-					</button>
-				</div>
+				<form action="{{ url("send-request") }}" method="post" id="order_call">
+					@csrf
+					<div class="modal-header">
+						<h5 class="modal-title">@lang('Заказать звонок')</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<fieldset class="form-group">
+							<label for="name">@lang('Ваше имя')</label>
+							<input type="text" name="name" id="name" class="form-control" required minlength="3" maxlength="150">
+						</fieldset>
+						<fieldset class="form-group">
+							<label for="phone">@lang('Ваш номер')</label>
+							<input type="text" id="phone" name="phone" class="form-control" required maxlength="20">
+							<small id="senderHelp" class="form-text text-muted">@lang('Пример: +375 ## ### ## ## или сокращенно с кодом оператора')</small>
+						</fieldset>
+						<fieldset class="form-group">
+							<label for="topic">@lang('Тема')</label>
+							<textarea name="topic" id="topic" class="form-control" maxlength="350"></textarea>
+						</fieldset>
+						@if( $creds && is_array($creds) )
+							<fieldset class="form-group">
+								<div class="g-recaptcha" data-sitekey="{{ $creds['sitekey'] }}" style="transform:scale(0.9);-webkit-transform:scale(0.9);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+							</fieldset>
+						@endif
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">
+							@lang('Закрыть')
+						</button>
+						<button type="submit" class="btn btn-primary">
+							@lang('Отправить')
+						</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

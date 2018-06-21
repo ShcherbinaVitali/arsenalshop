@@ -2,6 +2,9 @@
 
 Route::get('/', 'MainController@home')->name('home');
 
+Route::post('send-request', 'MainController@sendRequest')->name('send.request');
+Route::post('order-product', 'MainController@orderProduct')->name('order.product');
+
 Route::prefix('pages')->group(function () {
 	Route::get('/', 'MainController@pageList')->name('static.page-list');
 	Route::get('/{page}', 'MainController@page')->name('static.page');
