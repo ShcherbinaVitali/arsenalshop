@@ -132,7 +132,7 @@
 																		@if( $product->new )
 																			<div class="info-label col-md-4 new">
 																		<span class="align-middle">
-																			@lang('Новинка')
+																			@lang('New')
 																		</span>
 																			</div>
 																		@endif
@@ -146,7 +146,7 @@
 																		@if( $product->discount )
 																			<div class="info-label col-md-4 discount">
 																		<span class="align-middle">
-																			@lang('Скидка') -{{ $product->discount }}%
+																			-{{ $product->discount }}%
 																		</span>
 																			</div>
 																		@endif
@@ -201,7 +201,7 @@
 																		@if( $product->new )
 																			<div class="info-label col-md-4 new">
 																		<span class="align-middle">
-																			@lang('Новинка')
+																			@lang('New')
 																		</span>
 																			</div>
 																		@endif
@@ -215,7 +215,7 @@
 																		@if( $product->discount )
 																			<div class="info-label col-md-4 discount">
 																		<span class="align-middle">
-																			@lang('Скидка') -{{ $product->discount }}%
+																			-{{ $product->discount }}%
 																		</span>
 																			</div>
 																		@endif

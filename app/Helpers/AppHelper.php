@@ -17,7 +17,7 @@ class AppHelper {
 	const IS_ACTIVE_TITLE = 'is_active';
 	const IS_ACTIVE_VALUE = 1;
 	
-	const DEFAULT_PRODUCT_COUNT = 9;
+	const DEFAULT_PRODUCT_COUNT = 12;
 	const PRODUCT_ON_PAGE_ARR   = [
 		1,
 		12,
