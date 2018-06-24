@@ -20,9 +20,9 @@ class AppHelper {
 	const DEFAULT_PRODUCT_COUNT = 9;
 	const PRODUCT_ON_PAGE_ARR   = [
 		1,
-		9,
-		18,
-		27
+		12,
+		20,
+		28
 	];
 	
 	/**
