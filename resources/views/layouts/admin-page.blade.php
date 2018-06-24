@@ -20,6 +20,9 @@
 	<script>
 		tinymce.init({
 			selector: '#content',
+			extended_valid_elements: 'span[class]',
+			valid_elements : 'i[class]',
+			forced_root_block : '',
 			theme: 'modern',
 			height: 300,
 			plugins : 'advlist autolink link image lists charmap preview code textcolor colorpicker table',
