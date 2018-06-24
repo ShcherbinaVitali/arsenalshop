@@ -25,6 +25,8 @@ class AppHelper {
 		28
 	];
 	
+	const DEFAULT_BESTSELLERS_COUNT = 4;
+	
 	/**
 	 * @return \Illuminate\Database\Eloquent\Collection|static[]
 	 */
@@ -229,4 +231,26 @@ class AppHelper {
 		
 		return false;
 	}
+	
+	public static function getBestSellerProducts() {
+		$products = Product::all()
+			->where(
+				self::IS_ACTIVE_TITLE,
+				'=',
+				self::IS_ACTIVE_VALUE
+			)
+			->where(
+				'bestseller',
+				'=',
+				'1'
+			)
+			->take(self::DEFAULT_BESTSELLERS_COUNT)
+		;
+		
+		if ( !$products ) {
+			$products = [];
+		}
+		
+		return $products;
+	} 
 }
