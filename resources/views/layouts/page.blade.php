@@ -5,6 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
+		<meta name="robots" content="index, follow, all">
+		
 		<link rel="stylesheet" href="/css/vendor/bootstrap-4.0.0/bootstrap.min.css">
 		
 		<link rel="stylesheet" href="/css/style.css">
