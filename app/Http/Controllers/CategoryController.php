@@ -49,6 +49,10 @@ class CategoryController extends Controller {
 	}
 	
 	public function categoryList() {
+		$selectedMenuItem = Session::get('category.active');
+		if ( $selectedMenuItem ) {
+			Session::forget('category.active');
+		}
 		$categories = AppHelper::getCategoriesWithProducts();
 		
 		return view('pages.category-list', ['categories' => $categories]);
