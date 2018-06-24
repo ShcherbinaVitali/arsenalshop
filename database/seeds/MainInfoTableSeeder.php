@@ -16,7 +16,7 @@ class MainInfoTableSeeder extends Seeder {
 			],
 			[
 				'title'   => 'contacts',
-				'content' => e('<span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>229 53 04</strong></span><span class="contact"><i class="fa fa-phone"></i>+375 29 <strong>229 53 04</strong></span>')
+				'content' => e('<span class="contact"><span class="contacts-title">Skype:</span><i class="fab fa-skype"></i><strong>test@example</strong></span><span class="contact"><span class="contacts-title">Vel:</span><i class="fa fa-phone"></i>+375 29 <strong>111 11 11</strong></span><span class="contact"><span class="contacts-title">MTS:</span><i class="fa fa-phone"></i>+375 29 <strong>111 11 11</strong></span><span class="contact"><span class="contacts-title">e-mail:</span><i class="far fa-envelope"></i><strong>test@example.org</strong></span>')
 			],
 			[
 				'title'   => 'footer_about',

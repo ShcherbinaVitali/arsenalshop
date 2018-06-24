@@ -51,7 +51,7 @@
 								}
 							@endphp
 								<div class="product-count col-md-12">
-									<form action="{{ url("catalog/view-products") }}" method="post">
+									<form action="{{ url("catalog/view-products") }}" method="post" class="grid-form">
 										@csrf
 										<div class="text-left d-inline">
 											<input type="hidden" name="view_products" value="grid">
@@ -60,7 +60,7 @@
 											</button>
 										</div>
 									</form>
-									<form action="{{ url("catalog/view-products") }}" method="post">
+									<form action="{{ url("catalog/view-products") }}" method="post" class="list-form">
 										@csrf
 										<div class="text-left d-inline">
 											<input type="hidden" name="view_products" value="list">
@@ -100,7 +100,7 @@
 								<ul class="row">
 									@foreach($products as $product)
 										@if( !session()->get('product-list') )
-											<li class="col-md-4 product-grid-item">
+											<li class="col-12 col-sm-3 col-md-3 col-lg-3 product-grid-item">
 												@php
 													$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
 												@endphp
@@ -169,7 +169,7 @@
 												</a>
 											</li>
 										@else
-											<li class="col-md-12 product-list-item">
+											<li class="col-12 col-md-12 product-list-item">
 												@php
 													$productUrl = \App\Helpers\AppHelper::getFullUrlForItem($product);
 												@endphp

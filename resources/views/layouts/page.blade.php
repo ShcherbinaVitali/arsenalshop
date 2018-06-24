@@ -16,6 +16,8 @@
 		
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 		
+		<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+		
 		<link rel="stylesheet" href="/css/vendor/fontawesome/fontawesome-all.min.css">
 		
 		@yield('header.styles')
@@ -45,6 +47,7 @@
 				@include('layouts.left')
 				
 				@yield('content')
+				@yield('content-after')
 			</div>
 		</div>
 		

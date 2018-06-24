@@ -8,7 +8,7 @@
 	<div class="footer-links container">
 		<div class="row">
 			@if( $aboutInfo )
-				<div class="col-md-4 footer-links-item">
+				<div class="col-12 col-md-4 col-lg-4 footer-links-item">
 					<h3>
 						@lang('О нас')
 					</h3>
@@ -16,7 +16,7 @@
 				</div>
 			@endif
 			@if( $categories && count($categories) > 0 )
-				<div class="col-md-4 footer-links-item">
+				<div class="col-6 col-md-4 col-lg-4 footer-links-item">
 					<h3>
 						@lang('Категории')
 					</h3>
@@ -32,7 +32,7 @@
 				</div>
 			@endif
 			@if( $pages && count($pages) > 0 )
-				<div class="col-md-4 footer-links-item">
+				<div class="col-6 col-md-4 col-lg-4 footer-links-item">
 					<h3>
 						@lang('Страницы')
 					</h3>

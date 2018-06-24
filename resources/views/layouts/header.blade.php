@@ -1,10 +1,71 @@
 @php
+	$pages      = \App\Helpers\AppHelper::getPages();
+	$categories = \App\Helpers\AppHelper::getRootCategories();
+	
 	$creds = \App\Helpers\AppHelper::getCaptchaCreds();
 @endphp
 
 <div class="header-wrap">
 	<div class="top-header">
 		<div class="container clearfix">
+			<div class="mobile-menu">
+				<a href="#" class="menu-btn">
+					<span></span>
+				</a>
+				<div class="menu-content">
+					<div class="mobile-nav">
+						<ul>
+							@if( !Request::is('/') )
+								<li>
+									<a href="{{ route('home') }}">@lang('Главная')</a>
+								</li>
+							@endif
+							@if( $categories && count($categories) > 0 )
+								<ul>
+									<li>
+										<a href="#" class="catalog-mobile">@lang('Каталог')</a>
+										<ul class="catalog-categories">
+											@foreach($categories as $category)
+												<li>
+													<a href="{{ route('catalog.category', $category->alias) }}">
+														{{ $category->title }}
+													</a>
+												</li>
+											@endforeach
+										</ul>
+									</li>
+								</ul>
+							@endif
+							@if( $pages && count($pages) > 0 )
+								@foreach($pages as $page)
+									<li>
+										<a href="{{ route('static.page', $page->alias) }}">
+											{{ $page->title }}
+										</a>
+									</li>
+								@endforeach
+							@endif
+						</ul>
+					</div>
+				</div>
+				<script>
+					$(document).ready(function () {
+						$('.menu-btn').on('click', function () {
+							$(this).toggleClass('menu-btn-active');
+							$('.menu-content').toggleClass('show-menu');
+							$('html, body').toggleClass('no-scroll');
+							
+							return false;
+						});
+						
+						$('.catalog-mobile').on('click', function () {
+							$(this).toggleClass('active');
+							
+							return false;
+						})
+					});
+				</script>
+			</div>
 			<ul class="header-links pull-left">
 				<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
 				<li><a href="#"><i class="far fa-envelope"></i> email@email.com</a></li>
@@ -20,24 +81,42 @@
 	</div>
 	<header class="header container">
 		<div class="row">
-			<div class="logo-wrap col-md-3">
-				@if(Request::is('/'))
+			<div class="logo-wrap col-6 col-sm-3 col-md-3 col-lg-3">
+				@if( Request::is('/') )
 					<span class="logo">
 						<img src="{{ asset('images/general/logo.png') }}" alt="logo">
+						<span>
+							@lang('магазин-склад')
+						</span>
+						<span>
+							@lang('строительных материалов')
+						</span>
 					</span>
 				@else
 					<a href="/" class="logo">
 						<img src="{{ asset('images/general/logo.png') }}" alt="logo">
+						<span>
+							@lang('магазин-склад')
+						</span>
+						<span>
+							@lang('строительных материалов')
+						</span>
 					</a>
 				@endif
 			</div>
-			<div class="order-call col-md-2 offset-md-4 text-center">
-				<button href="#" class="btn btn-primary" data-toggle="modal" data-target="#callOrderModal">
-					@lang('Заказать звонок')
-				</button>
+			<div class="col-md-3 col-lg-3 work-time">
+				@include('layouts.work-time')
 			</div>
-			<div class="header-contacts col-md-3 text-right">
+			<div class="col-md-3 col-lg-3">
+				@include('layouts.address')
+			</div>
+			<div class="header-contacts col-6 col-sm-3 col-md-3 col-lg-3 text-right">
 				@include('layouts.contacts')
+				<div class="order-call text-right">
+					<button class="btn btn-primary" data-toggle="modal" data-target="#callOrderModal">
+						@lang('Заказать звонок')
+					</button>
+				</div>
 			</div>
 		</div>
 	</header>
