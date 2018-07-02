@@ -22,10 +22,12 @@
 					array_unshift($segments, ['alias' => 'catalog', 'title' => 'Каталог']);
 				}
 				elseif ($segments[0] === 'pages' && count($segments) > 1) {
-					$segments[0] = 'Страницы';
+					$model = \App\Page::where('alias', '=', $segments[1])->get()->first();
+					$segments[0] = ['alias' => 'pages', 'title' => 'Страницы'];
+					$segments[1] = ['alias' => $model->alias, 'title' => $model->title];
 				}
 			@endphp
-			@if( Request::segment(1) === 'catalog' && count(Request::segments()) > 1 )
+			@if( Request::segment(1) === 'catalog' || Request::segment(1) === 'pages' && count(Request::segments()) > 1 )
 				@for($i = 0; $i < count($segments); $i++)
 					<li>
 						@php
@@ -39,6 +41,8 @@
 						@endif
 					</li>
 				@endfor
+			@elseif( Request::segment(1) === 'pages' && count(Request::segments()) > 1 )
+				
 			@else
 				@for($i = 0; $i < count($segments); $i++)
 					<li>
