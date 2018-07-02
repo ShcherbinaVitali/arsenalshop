@@ -11,7 +11,10 @@
 		<div class="container">
 			<hr>
 			<div class="row">
-				<div>
+				<div class="s-page-title">
+					<h1>{{ $content->title }}</h1>
+				</div>
+				<div class="static-page-content">
 					@if($content)
 						{!! html_entity_decode($content->content) !!}
 					@endif
